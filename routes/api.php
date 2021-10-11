@@ -2,8 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\RoutesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +15,9 @@ use App\Http\Controllers\UsersController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
+});*/
 
-Route::get('users', [UsersController::class, 'index']);
-Route::get('users/{user}', [UsersController::class, 'show']);
+Route::get('route/info/{id}', [RoutesController::class, 'info']);
+Route::get('route/points/{id}', [RoutesController::class, 'points']);

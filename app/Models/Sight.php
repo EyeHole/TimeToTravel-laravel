@@ -17,6 +17,13 @@ class Sight extends Model
         'priority'
     ];
 
+    protected $hidden = [
+        'route_id',
+        'priority',
+        'created_at',
+        'updated_at'
+    ];
+
     public function route()
     {
         return $this->belongsTo(Route::class);

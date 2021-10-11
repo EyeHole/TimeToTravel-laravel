@@ -17,6 +17,15 @@ class Route extends Model
         'language' // 0: 'RUS'; 1: 'ENG';
     ];
 
+    protected $hidden = [
+        'user_id',
+        'city_id',
+        'created_at',
+        'updated_at'
+    ];
+
+    protected $appends = ['city', 'author'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -30,5 +39,21 @@ class Route extends Model
     public function sights()
     {
         return $this->hasMany(Sight::class);
+    }
+
+    public function getCityAttribute()
+    {
+        $city = City::find($this->city_id);
+        return $city->city;
+    }
+
+    public function getAuthorAttribute()
+    {
+        $user = User::find($this->user_id);
+        $author = array(
+            'name' => $user->first_name.' '.$user->last_name,
+            'description' => $user->description
+        );
+        return $author;
     }
 }

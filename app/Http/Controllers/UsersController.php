@@ -7,13 +7,18 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
-    public function index()
-	{
-	    return User::all();
-	}
+    public function create()
+    {
+        //
+    }
 
-	public function show(User $user)
-	{
-	    return $user;
-	}
+    public function update(Request $request, Route $route)
+    {
+        //
+    }
+
+    public function delete(Route $route)
+    {
+        //
+    }
 }

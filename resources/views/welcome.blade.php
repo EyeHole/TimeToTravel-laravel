@@ -24,7 +24,7 @@
 
 
 
-            @foreach($users as $user)
+            <!-- @foreach($users as $user)
 
             <div class="pa2 mb3 striped--near-white">
 
@@ -42,7 +42,7 @@
 
             </div>
 
-            @endforeach
+            @endforeach -->
 
         </div>
 

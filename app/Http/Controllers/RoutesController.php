@@ -16,7 +16,7 @@ class RoutesController extends Controller
     public function points($id)
     {
         $route = Route::find($id);
-        $sights = $route->sights()->get()->sortByDesc('priotiry');
+        $sights = $route->sights()->get();
         return response()->json(array('sights' => $sights));
     }
 

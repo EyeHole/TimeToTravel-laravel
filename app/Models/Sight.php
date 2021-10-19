@@ -19,7 +19,6 @@ class Sight extends Model
 
     protected $hidden = [
         'route_id',
-        'priority',
         'created_at',
         'updated_at'
     ];

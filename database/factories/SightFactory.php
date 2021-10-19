@@ -27,8 +27,8 @@ class SightFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'description' => $this->faker->text(255),
-            'latitude' => $this->faker->latitude(),
-            'longitude' => $this->faker->longitude(),
+            'latitude' => $this->faker->latitude(55, 57),
+            'longitude' => $this->faker->longitude(36, 38),
             'priority' => $priority,
             'route_id' => $route_id
         ];

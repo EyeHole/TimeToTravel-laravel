@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password_hash')->nullable(false);
             $table->boolean('is_author');
             $table->text('description');
+            $table->string('avatar');
             $table->timestamps();
         });
     }

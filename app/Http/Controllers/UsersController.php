@@ -7,18 +7,37 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
-    public function create()
+    public function get(Request $request)
+    {
+
+    }
+
+
+    public function create(Request $request)
     {
         //
     }
 
-    public function update(Request $request, Route $route)
+    public function update(Request $request)
     {
         //
     }
 
-    public function delete(Route $route)
+    public function delete(Request $request)
     {
         //
+    }
+
+    public function uploadAvatar(Request $request)
+    {    
+        $request->validate([
+            'avatar' => 'required|mimes:jpg,jpeg|max:2048'
+        ]);
+
+        $path = $request->file('avatar')->storePublicly('avatars', 'public');
+    
+        // add path to user in database here
+    
+        return response()->json(['avatar' => $path]);
     }
 }

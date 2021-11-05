@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoutesController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,4 @@ use App\Http\Controllers\RoutesController;
 
 Route::get('route/info/{id}', [RoutesController::class, 'info']);
 Route::get('route/points/{id}', [RoutesController::class, 'points']);
+Route::post('upload/avatar', [UsersController::class, 'uploadAvatar']);

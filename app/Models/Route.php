@@ -14,7 +14,8 @@ class Route extends Model
         'description',
         'length',
         'transport', // 0: undefined; 1: walk; 2: roadtrip; 3: community transport;
-        'language' // 0: 'RUS'; 1: 'ENG';
+        'language', // 0: 'RUS'; 1: 'ENG';
+        'photo'
     ];
 
     protected $hidden = [
@@ -52,7 +53,8 @@ class Route extends Model
         $user = User::find($this->user_id);
         $author = array(
             'name' => $user->first_name.' '.$user->last_name,
-            'description' => $user->description
+            'description' => $user->description,
+            'avatar' => $user->avatar
         );
         return $author;
     }

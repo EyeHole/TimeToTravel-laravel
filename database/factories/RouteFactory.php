@@ -32,7 +32,8 @@ class RouteFactory extends Factory
             'transport' => $this->faker->numberBetween(0, 3),
             'language' => $this->faker->numberBetween(0, 1),
             'user_id' => $user_id,
-            'city_id' => $city_id
+            'city_id' => $city_id,
+            'photo' => 'test.jpg'
         ];
     }
 }

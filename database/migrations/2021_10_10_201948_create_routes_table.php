@@ -22,6 +22,7 @@ class CreateRoutesTable extends Migration
             $table->integer('language');
             $table->integer('user_id')->unsigned();
             $table->integer('city_id')->unsigned();
+            $table->string('photo');
             $table->timestamps();
         });
 

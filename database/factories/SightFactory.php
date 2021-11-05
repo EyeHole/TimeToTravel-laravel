@@ -30,7 +30,8 @@ class SightFactory extends Factory
             'latitude' => $this->faker->latitude(55, 57),
             'longitude' => $this->faker->longitude(36, 38),
             'priority' => $priority,
-            'route_id' => $route_id
+            'route_id' => $route_id,
+            'photos' => json_encode(['test.jpg'])
         ];
     }
 }

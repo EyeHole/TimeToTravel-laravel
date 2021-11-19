@@ -23,6 +23,7 @@ class RoutesController extends Controller
 
     public function city(Request $request, $limit, $skip)
     {
+        // dd(DB::table('cities')->get());
         $data = $request->json()->all();
         $routes = DB::table('cities')
                     ->where('city', '=', $data['city'])
@@ -46,7 +47,7 @@ class RoutesController extends Controller
                 * cos(deg2rad(floatval($data['longitude']))-deg2rad(floatval($b->longitude))));
         });
 
-        $routes = array_slice($routes, $limit, $skip);
+        $routes = array_slice($routes, $skip, $limit);
 
         $routes = array_map( function($item) {
             return (object) array(

@@ -1,0 +1,46 @@
+.nav-menu {
+    color: white;
+}
+
+#map {
+    height: 100%;
+  }
+
+.row {
+    height: 100%;
+    margin: 0;
+}
+
+html,
+body, .container-fluid {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.trip-form {
+    padding: 3%;
+}
+
+.add-trip {
+    padding: 2%;
+}
+
+.file-input {
+    margin-top: 0.5rem;
+}
+
+.add-trip-btn {
+    padding: 2%;
+}
+
+.content {
+    margin-bottom: 2%;
+}
+.footer {
+    margin-top: 3%;
+    padding-top: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    height: 50px;
+    position:static;
+}

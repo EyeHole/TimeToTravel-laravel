@@ -2,19 +2,12 @@
 
 <html>
 
-    <head>
+    <title>TimeToTravel</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}" >
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-        <meta charset="utf-8">
-
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-
-        <title>Users</title>
-
-        <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
-
-    </head>
+    <x-navbar/>
 
     <body>
 
@@ -26,5 +19,8 @@
         </div>
 
     </body>
+
+    
+    <x-footer/>
 
 </html>

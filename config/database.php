@@ -17,7 +17,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'prod_pgsql'),
+    'default' => env('DB_CONNECTION', 'local_pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
         //     'sslmode' => 'prefer',
         // ],
 
-        'prod_pgsql' => [
+        'local_pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),

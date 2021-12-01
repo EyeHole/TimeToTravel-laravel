@@ -23,3 +23,4 @@ use App\Http\Controllers\UsersController;
 Route::get('route/info/{id}', [RoutesController::class, 'info']);
 Route::get('route/points/{id}', [RoutesController::class, 'points']);
 Route::post('upload/avatar', [UsersController::class, 'uploadAvatar']);
+Route::post('route/city/{limit}/{skip}', [RoutesController::class, 'city']);

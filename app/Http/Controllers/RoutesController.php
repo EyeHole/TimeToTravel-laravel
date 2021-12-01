@@ -78,45 +78,52 @@ class RoutesController extends Controller
         $trip_id = $request->input('trip_id');
         $order = $request->input('order');
         $length = $request->input('length');
+    
+        if ($request->input('action') == 'prev') {
+                return $this->showPlace($trip_id, $order-1, $length);
+        } 
+        
+        if ($request->input('action') ==  'next') {
+            return $this->showPlace($trip_id, $order+1, $length);
+        }
 
-        $place = new Sight();
+        $request->validate([
+            'name' => 'required|max:255',
+            'latitude' => ['required','regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'], 
+            'longitude' => ['required','regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/']
+        ]);
+
+        $place = Sight::where([
+            ['priority', '=', $order],
+            ['route_id', '=', $trip_id]
+        ])->first();
+    
+        if ($place == null) {
+            $place = new Sight();
+        }
+    
         $place['name'] = $request->input('name');
         $place['description'] = $request->input('description');
         $place['latitude'] = $request->input('latitude');
         $place['longitude'] = $request->input('longitude');
         $place['priority'] = $order;
         $place['route_id'] = $trip_id;
-    
-        switch ($request->input('action')) {
-            case 'prev':
-                return $this->showPlace($trip_id, $order-1, $length);
-            case 'next':
-                return $this->showPlace($trip_id, $order+1, $length);
-            case 'new':
-                $request->validate([
-                    'name' => 'required|max:255',
-                    'latitude' => ['required','regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'], 
-                    'longitude' => ['required','regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/']
-                ]);
-                $place->save();
-                return $this->showPlace($trip_id, $length+1, $length+1);
-            case 'end':
-                $request->validate([
-                    'name' => 'required|max:255',
-                    'latitude' => ['required','regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'], 
-                    'longitude' => ['required','regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/']
-                ]);
-                $place->save();
-                return $this->showTripInfo($trip_id, $length);
+
+        $place->save();
+        
+        if ($request->input('action') == 'new') {
+            return $this->showPlace($trip_id, $length+1, $length+1);
         }
+        return $this->showTripInfo($trip_id);
     }
 
-    public function showTripInfo(int $trip_id, int $length)
+    public function showTripInfo(int $trip_id)
     {
         $route = Route::find($trip_id);
         $name = $route['name'];
         $description = $route['description'];
         $option = $route['transport'];
+        $length = Sight::where([['route_id','=', $trip_id]])->count();
     
         return view("trip/overview", compact('length', 'name', 'description', 'option'));
     }

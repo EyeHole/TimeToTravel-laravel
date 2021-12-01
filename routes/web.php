@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\RoutesController;
 
 Auth::routes();
 
@@ -10,8 +10,18 @@ Route::get('/', function () {
 })->name('main');
 
 Route::get('/trip', function () {
-    return view('trip');
+    return view('trip/trip');
 })->name('trip');
+
+Route::post('route', [RoutesController::class, 'create']);
+Route::post('place', [RoutesController::class, 'addPlace']);
+
+Route::get('route', [RoutesController::class, 'repopulate']);
+Route::get('place', [RoutesController::class, 'repopulate']);
+
+
+
+// TODO: implement these routes 
 
 Route::get('/signup', function () {
     return view('welcome');

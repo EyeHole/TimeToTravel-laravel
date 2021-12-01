@@ -10,17 +10,14 @@
     <x-navbar/>
 
     <body>
-
-        <div class="mw6 center pa3 sans-serif">
-
-            <h1 class="mb4">Users</h1>
-            <p>hello hell</p>
-
+    <div class="container text-center welcome-content">
+        <h2>Добро пожаловать на сайт Time To Travel!</h2>
+        <a href="{{ route('trip') }}" class="btn btn-primary main-btn" role="button">Добавить маршрут</a>
         </div>
+    </div>
 
+    <x-footer/>
     </body>
 
-    
-    <x-footer/>
 
 </html>

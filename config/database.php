@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Str;
 
-$DATABASE_URL = parse_url('postgres://quhncnchgksqua:d838bbea631ed21d8720c65476b67612cc50246cf22182c5af2bcaa03c3d21c1@ec2-3-228-134-188.compute-1.amazonaws.com:5432/d2pkh7gi891g31');
+$DATABASE_URL = parse_url('postgres://qurxqhaskeruyo:5dc95ed91cf28a74dc9812496012a62e5bb5c39fd023bf27338fb8a392719a7f@ec2-3-225-30-189.compute-1.amazonaws.com:5432/d26ku42ff6fs3k');
 
 return [
 
@@ -17,7 +17,9 @@ return [
     |
     */
 
+
     'default' => env('DB_CONNECTION', 'local'),
+
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +82,7 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        'pgsql' => [
+        'heroku_pgsql' => [
             'driver' => 'pgsql',
             'host' => $DATABASE_URL["host"],
             'port' => $DATABASE_URL["port"],
@@ -89,7 +91,6 @@ return [
             'password' => $DATABASE_URL["pass"],
             'charset' => 'utf8',
             'prefix' => '',
-            'prefix_indexes' => true,
             'schema' => 'public',
             'sslmode' => 'require',
         ],
@@ -139,7 +140,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [

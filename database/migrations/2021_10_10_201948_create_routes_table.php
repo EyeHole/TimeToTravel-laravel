@@ -16,13 +16,13 @@ class CreateRoutesTable extends Migration
         Schema::create('routes', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable(false);
-            $table->text('description');
-            $table->float('length')->nullable(false);
-            $table->integer('transport');
-            $table->integer('language');
+            $table->text('description')->nullable(true);
+            $table->float('length')->nullable(false)->default(0);
+            $table->integer('transport')->default(0);
+            $table->integer('language')->default(0);
             $table->integer('user_id')->unsigned();
             $table->integer('city_id')->unsigned();
-            $table->string('photo');
+            $table->string('photo')->nullable(true);
             $table->timestamps();
         });
 

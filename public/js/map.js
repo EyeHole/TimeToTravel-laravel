@@ -1,8 +1,35 @@
-let map;
-
 function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: -34.397, lng: 150.644 },
-        zoom: 8,
+    var latitude = 55.751244;
+    var longitude = 37.618423;
+
+    var LatLng = new google.maps.LatLng(latitude, longitude);
+
+    var mapProp = {
+        center: LatLng,
+        zoom: 12,
+        draggableCursor: 'pointer'
+    };
+    var map = new google.maps.Map(document.getElementById("map"), mapProp);
+
+    map.addListener('click', function (event) {
+        placeMarker(event.latLng, map);
     });
+}
+
+var marker;
+
+function placeMarker(location, map) {
+    if (marker == null) {
+        marker = new google.maps.Marker({
+            position: location,
+            map: map
+        });
+    } else {
+        marker.setPosition(location);
+    }
+
+    var lat = document.getElementById("latitude");
+    var long = document.getElementById("longitude");
+    lat.value = location.lat();
+    long.value = location.lng();
 }

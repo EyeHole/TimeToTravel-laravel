@@ -87,8 +87,6 @@ class RoutesController extends Controller
         
         $route->save();
 
-        error_log($route);
-
         $id = $route['id'];
         $order = 1;
         $length = 1;

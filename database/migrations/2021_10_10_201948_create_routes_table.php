@@ -17,9 +17,9 @@ class CreateRoutesTable extends Migration
             $table->id();
             $table->string('name')->nullable(false);
             $table->text('description')->nullable(true);
-            $table->float('length')->nullable(false)->default(0);
-            $table->integer('transport')->default(0);
-            $table->integer('language')->default(0);
+            $table->float('length')->nullable(false)->default('0');
+            $table->integer('transport')->default('0');
+            $table->integer('language')->default('0');
             $table->integer('user_id')->unsigned();
             $table->integer('city_id')->unsigned();
             $table->string('photo')->nullable(true);

@@ -19,6 +19,8 @@ Route::post('place', [RoutesController::class, 'addPlace']);
 Route::get('route', [RoutesController::class, 'repopulate']);
 Route::get('place', [RoutesController::class, 'repopulate']);
 
+Route::get('trip/places', [RoutesController::class, 'showEmptyPlacesForm'])->name('trip/places');
+
 
 
 // TODO: implement these routes 

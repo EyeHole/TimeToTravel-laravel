@@ -18,7 +18,11 @@
                 <script
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSQ1ZoiS7_oGzQkUJwlkuBohkvW1_yWRs&callback=initMap&v=weekly"
                 async
-                ></script>
+                >               
+            </script>
+            <script>
+                
+                </script>
                 <div class="trip-form col">
                     <h4 class="header"> Выберите точку на карте или укажите ее координаты и расскажите о ней. </h4>
 

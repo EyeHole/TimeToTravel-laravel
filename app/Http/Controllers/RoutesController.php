@@ -69,7 +69,7 @@ class RoutesController extends Controller
         return response()->json($routes);
     }
 
-    public function create()
+    public function create(Request $request)
     {
 
         $request->validate([

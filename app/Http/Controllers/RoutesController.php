@@ -87,16 +87,20 @@ class RoutesController extends Controller
         
         $route->save();
 
-        error_log($route);
-
         $id = $route['id'];
+
+        session(['id' => $id]);
+        return redirect()->route('trip/places');
+    }
+
+    public function showEmptyPlacesForm(Request $request) {
+        $id = session('id');
         $order = 1;
         $length = 1;
         $longitude = "";
         $latitude = "";
         $name = "";
         $description = "";
-
         return view("trip/places", compact('id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
     }
 

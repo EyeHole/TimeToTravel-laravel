@@ -19,7 +19,7 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'email',
-        'password',
+        'password_hash',
         'date_of_birth',
         'is_author',
         'description',
@@ -31,5 +31,5 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = ['password'];
+    protected $hidden = ['password_hash'];
 }

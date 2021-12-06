@@ -23,7 +23,7 @@ use Illuminate\Validation\ValidationException;
     return $request->user();
 });*/
 
-Route::post('/sanctum/token', function (Request $request) {
+Route::post('/token', function (Request $request) {
     $request->validate([
         'email' => 'required|email',
         'password' => 'required',
@@ -32,14 +32,16 @@ Route::post('/sanctum/token', function (Request $request) {
 
     $user = User::where('email', $request->email)->first();
 
-    if (! $user || ! Hash::check($request->password, $user->password)) {
+    if (! $user || ! Hash::check($request->password, $user->password_hash)) {
         throw ValidationException::withMessages([
             'email' => ['The provided credentials are incorrect.'],
         ]);
     }
 
-    return $user->createToken($request->device_name)->plainTextToken;
+    return response()->json(['token' => $user->createToken($request->device_name)->plainTextToken]);
 });
+
+Route::post('/user/create', [UsersController::class, 'create']);
 
 Route::get('route/info/{id}', [RoutesController::class, 'info']);
 Route::get('route/points/{id}', [RoutesController::class, 'points']);

@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+
 class UsersController extends Controller
 {
     public function get(Request $request)
@@ -15,7 +21,7 @@ class UsersController extends Controller
 
     public function create(Request $request)
     {
-        //
+        
     }
 
     public function update(Request $request)

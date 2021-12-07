@@ -10,35 +10,43 @@ class UsersController extends Controller
 
     public function login(Request $request)
     {
+        // TODO: implement
         return response();
     }
 
     public function signup(Request $request)
     {
+        // TODO: implement
         return response();
     }
 
-    public function get(Request $request)
-    {
-
-    }
-
-
-    public function create(Request $request)
-    {
-        //
-    }
 
     public function update(Request $request)
     {
-        //
+        // TODO: implement
+        return response();
     }
 
-    public function delete(Request $request)
+    public function logout(Request $request)
     {
-        //
+        // TODO: implement
+        return response();
     }
 
+    public function settings(Request $request)
+    {
+        // TODO: get current user and fill these params
+    
+        $name = 'Чье-то имя';
+        $surname = 'Чья-то фамилия';
+        $email = 'Почта';
+        $bio = 'Био';
+
+        return view("user/settings", compact('name', 'surname', 'email', 'bio'));
+    }
+
+
+   // old function - not used
     public function uploadAvatar(Request $request)
     {    
         $request->validate([

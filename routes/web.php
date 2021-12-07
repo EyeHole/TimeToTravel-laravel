@@ -39,7 +39,7 @@ Route::post('signup', [UsersController::class, 'signup']);
 Route::get('/logout', function () {
     return view('welcome');
 })->name('logout');
+Route::post('logout', [UsersController::class, 'logout']);
 
-Route::get('/settings', function () {
-    return view('welcome');
-})->name('settings');
+Route::get('/settings', [UsersController::class, 'settings'])->name('settings');
+Route::post('settings', [UsersController::class, 'update']);

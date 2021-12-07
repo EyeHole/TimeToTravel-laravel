@@ -45,7 +45,7 @@ body, .container-fluid {
 }
 .main-btn {
     margin-top: 2%;
-    padding: 1%;
+    padding: 1.5%;
 }
 
 .place-content {
@@ -57,6 +57,13 @@ body, .container-fluid {
     text-align: center;
     margin-left: 1%;
     margin-right: 1%;
+}
+
+.card-btn {
+    padding-right: 6%;
+    padding-left: 6%;
+    padding-top: 3%;
+    padding-bottom: 3%;
 }
 
 .content {
@@ -108,4 +115,16 @@ body, .container-fluid {
 
 .back-btn {
     padding: 1%;
+}
+
+
+.login-card {
+    width:30%;
+    box-shadow: 0 30px 60px 0 rgb(0 0 0 / 30%);
+}
+
+.reg-card {
+    width:40%;
+    box-shadow: 0 30px 60px 0 rgb(0 0 0 / 30%);
+    margin-bottom: 3%;
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoutesController;
+use App\Http\Controllers\UsersController;
 
 Auth::routes();
 
@@ -25,17 +26,15 @@ Route::get('trip/places', [RoutesController::class, 'showEmptyPlacesForm'])->nam
 
 // TODO: implement these routes 
 
-Route::get('/signup', function () {
-    return view('welcome');
-})->name('signup');
-
 Route::get('/login', function () {
-    return view('welcome');
+    return view('user/login');
 })->name('login');
+Route::post('login', [UsersController::class, 'login']);
 
 Route::get('/signup', function () {
-    return view('welcome');
+    return view('user/signup');
 })->name('signup');
+Route::post('signup', [UsersController::class, 'signup']);
 
 Route::get('/logout', function () {
     return view('welcome');

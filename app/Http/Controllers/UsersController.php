@@ -7,6 +7,17 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
+
+    public function login(Request $request)
+    {
+        return response();
+    }
+
+    public function signup(Request $request)
+    {
+        return response();
+    }
+
     public function get(Request $request)
     {
 

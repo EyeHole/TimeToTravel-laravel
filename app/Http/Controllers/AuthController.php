@@ -18,9 +18,9 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
         
-        $data = request()->only('email', 'password');
+        $credentials = $request->only('email', 'password');
    
-        if (Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'is_author' => TRUE])) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             return redirect()->intended('/');

@@ -5,23 +5,24 @@ use App\Http\Controllers\RoutesController;
 use App\Http\Controllers\AuthController;
 
 // Auth::routes();
+Route::get('/', function () {
+    return view('welcome');
+})->name('main');
 
-Route::group(['middleware' => 'auth:web'], function () {
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('main');
-    
-    Route::get('/trip', function () {
-        return view('trip/trip');
-    })->name('trip');
-    
-    Route::post('route', [RoutesController::class, 'create']);
-    Route::post('place', [RoutesController::class, 'addPlace']);
+Route::group(['middleware' => 'auth:web'], function () {    
+    Route::group(['middleware' => 'author'], function () {  
+        Route::get('/trip', function () {
+            return view('trip/trip');
+        })->name('trip');
+        
+        Route::post('route', [RoutesController::class, 'create']);
+        Route::post('place', [RoutesController::class, 'addPlace']);
 
-    Route::get('route', [RoutesController::class, 'repopulate']);
-    Route::get('place', [RoutesController::class, 'repopulate']);
+        Route::get('route', [RoutesController::class, 'repopulate']);
+        Route::get('place', [RoutesController::class, 'repopulate']);
 
-    Route::get('trip/places', [RoutesController::class, 'showEmptyPlacesForm'])->name('trip/places');
+        Route::get('trip/places', [RoutesController::class, 'showEmptyPlacesForm'])->name('trip/places');
+    });
 });
 
 Route::post('signup', [AuthController::class, 'webRegistration']);

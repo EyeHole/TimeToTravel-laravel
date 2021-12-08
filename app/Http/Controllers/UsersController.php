@@ -5,21 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Auth;
+
 class UsersController extends Controller
 {
 
     public function login(Request $request)
     {
-        // TODO: implement
-        return response();
+        //Moved to auth controller
     }
 
     public function signup(Request $request)
     {
-        // TODO: implement
-        return response();
+        //Moved to auth controller
     }
-
 
     public function update(Request $request)
     {

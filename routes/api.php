@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoutesController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\AuthController;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -23,28 +24,17 @@ use Illuminate\Validation\ValidationException;
     return $request->user();
 });*/
 
-Route::post('/token', function (Request $request) {
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-        'device_name' => 'required',
-    ]);
-
-    $user = User::where('email', $request->email)->first();
-
-    if (! $user || ! Hash::check($request->password, $user->password_hash)) {
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
-    }
-
-    return response()->json(['token' => $user->createToken($request->device_name)->plainTextToken]);
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::group(['prefix' => 'route'], function () {
+        Route::get('info/{id}', [RoutesController::class, 'info']);
+        Route::get('points/{id}', [RoutesController::class, 'points']);
+        Route::post('city/{limit}/{skip}', [RoutesController::class, 'city']);
+    });
+    
+    Route::post('upload/avatar', [UsersController::class, 'uploadAvatar']);
 });
 
-Route::post('/user/create', [UsersController::class, 'create']);
-
-Route::get('route/info/{id}', [RoutesController::class, 'info']);
-Route::get('route/points/{id}', [RoutesController::class, 'points']);
-Route::post('upload/avatar', [UsersController::class, 'uploadAvatar']);
-
-Route::post('route/city/{limit}/{skip}', [RoutesController::class, 'city']);
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('signup', [AuthController::class, 'apiRegistration']);
+    Route::post('login', [AuthController::class, 'apiLogin']);
+});

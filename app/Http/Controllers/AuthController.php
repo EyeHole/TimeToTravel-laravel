@@ -86,18 +86,13 @@ class AuthController extends Controller
 
     public function apiSignup(Request $request)
     {  
-        $valid = validator($request->all(), [
+        $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => ['required', 'confirmed', Password::min(8)->numbers()->letters()],
             'device_name' => 'required'
         ]);
-
-        if ($valid->fails()) {
-            $jsonError=response()->json($valid->errors()->all(), 400);
-            return \Response::json($jsonError);
-        }
 
         $data = request()->only('first_name', 'last_name', 'email', 'password', 'avatar');
         $user = $this->create($data);

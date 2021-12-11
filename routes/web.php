@@ -19,8 +19,8 @@ Route::group(['middleware' => 'auth:web'], function () {
         Route::post('route', [RoutesController::class, 'create']);
         Route::post('place', [RoutesController::class, 'addPlace']);
 
-        Route::get('route', [RoutesController::class, 'repopulate']);
-        Route::get('place', [RoutesController::class, 'repopulate']);
+        Route::get('route', [RoutesController::class, 'repopulatePlaces']);
+        Route::get('place', [RoutesController::class, 'repopulatePlaces']);
 
         Route::get('trip/places', [RoutesController::class, 'showEmptyPlacesForm'])->name('trip/places');
     });

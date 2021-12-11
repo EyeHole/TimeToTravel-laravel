@@ -26,7 +26,7 @@ class UserFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
-            'password_hash' => $this->faker->password(),
+            'password' => $this->faker->password(),
             'date_of_birth' => $this->faker->dateTimeThisCentury->format('Y-m-d'),
             'is_author' => false,
             'description' => $this->faker->text(255),

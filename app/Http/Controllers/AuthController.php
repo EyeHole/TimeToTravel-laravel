@@ -16,8 +16,8 @@ class AuthController extends Controller
     public function webLogin(Request $request)
     {
         $request->validate([
-            'email' => 'required',
-            'password' => 'required',
+            'email' => 'required|string|email|max:255',
+            'password' => ['required', 'min:8','regex:/[a-zA-Z]/', 'regex:/[0-9]/']
         ]);
         
         $credentials = $request->only('email', 'password');
@@ -37,7 +37,7 @@ class AuthController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Password::min(8)->numbers()->letters()],
+            'password' => ['required', 'confirmed', 'min:8', 'regex:/[a-zA-Z]/', 'regex:/[0-9]/'],
         ]);
 
         $data = request()->only('first_name', 'last_name', 'email', 'password', 'avatar');

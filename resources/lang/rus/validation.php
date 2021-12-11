@@ -107,7 +107,11 @@ return [
         'name' => 'название',
         'description' => 'описание',
         'latitude' => 'широта',
-        'longitude' => 'долгота'
+        'longitude' => 'долгота',
+        'password' => 'пароль',
+        'email' => 'почта',
+        'first_name' => 'имя',
+        'last_name' => 'фамилия'
     ],
 
 ];

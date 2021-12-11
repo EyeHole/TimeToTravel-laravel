@@ -15,7 +15,7 @@
       <div class="d-flex flex-row-reverse bd-highlight">
         <a class="navbar-brand bd-highlight nav-menu" href="{{ route('logout') }}">Выйти</a>
         <a class="navbar-brand bd-highlight nav-menu" href="{{ route('settings') }}">Настройки</a>
-        <a class="navbar-brand bd-highlight nav-menu" href="{{ route('settings') }}">Имя Фамилия</a>
+        <a class="navbar-brand bd-highlight nav-menu" href="{{ route('settings') }}">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</a>
       </div>
       @endauth
     </div>

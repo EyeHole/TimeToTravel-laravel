@@ -23,7 +23,7 @@
                             <input class="form-control" type="email" name="email">
                         </div>
                         @if ($errors->has('email'))
-                            <span class="text-danger">{{ $errors->first('email') }} gdf</span>
+                            <span class="text-danger">{{ $errors->first('email') }}</span>
                         @endif
                     </div> 
                     <div class="form-group">
@@ -32,7 +32,8 @@
                             <input class="form-control" type="password" name="password">
                         </div>
                         @if ($errors->has('password'))
-                            <span class="text-danger">{{ $errors->first('password') }} gdf</span>
+                            <span class="text-danger">{{ $errors->first('password') }}</span>
+                            <p class="text-danger">Пароль должен содержать хотя бы одну букву и одну цифру.</p>
                         @endif
                     </div>
                     <div class="form-group text-center">

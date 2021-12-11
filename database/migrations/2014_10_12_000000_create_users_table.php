@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name')->nullable(false);
             $table->date('date_of_birth')->nullable(false);
             $table->string('email')->unique()->nullable(false);
-            $table->string('password_hash')->nullable(false);
+            $table->string('password')->nullable(false);
             $table->boolean('is_author');
             $table->text('description');
             $table->string('avatar');

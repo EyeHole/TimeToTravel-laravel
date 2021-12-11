@@ -180,7 +180,7 @@ class RoutesController extends Controller
         return view("trip/overview", compact('length', 'name', 'description', 'option'));
     }
 
-    public function repopulate(Request $request) {
+    public function repopulatePlaces(Request $request) {
         $id = $request->old('trip_id');
         $order = $request->old('order');
         $length = $request->old('length');

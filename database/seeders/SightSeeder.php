@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Sight;
 use Illuminate\Database\Seeder;
 
 class SightSeeder extends Seeder

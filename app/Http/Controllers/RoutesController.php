@@ -6,6 +6,7 @@ use App\Models\Route;
 use App\Models\Sight;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class RoutesController extends Controller
 {
@@ -87,11 +88,8 @@ class RoutesController extends Controller
         $route['transport'] = $request->input('transport');
 
         if ($request->hasFile('mainImage')) {
-            $image = $request->file('mainImage');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/storage/routes/');
-            $image->move($destinationPath, $name);
-            $route['photo'] = 'storage/routes/' . $name;
+            $path = $request->file('mainImage')->storePublicly('routes', 'public');
+            $route['photo'] = 'storage/' . $path;
         }
 
         //get user id and default city here
@@ -151,7 +149,8 @@ class RoutesController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'latitude' => ['required', 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
-            'longitude' => ['required', 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/']
+            'longitude' => ['required', 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'],
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $place = Sight::where([
@@ -170,6 +169,16 @@ class RoutesController extends Controller
         $place['priority'] = $order;
         $place['route_id'] = $trip_id;
 
+        $image_paths = [];
+        if ($request->hasfile('images')) {
+            foreach ($request->file('images') as $file) {
+                $path = $file->storePublicly('storage/sights/' . $trip_id . '/images', 'public');
+                array_push($image_paths, $path);
+            }
+        }
+        $place['photos'] = json_encode($image_paths);
+
+        error_log($place);
         $place->save();
 
         if ($request->input('action') == 'new') {

@@ -107,7 +107,9 @@ return [
         'name' => 'название',
         'description' => 'описание',
         'latitude' => 'широта',
-        'longitude' => 'долгота'
+        'longitude' => 'долгота',
+        'mainImage' => 'главное изображение',
+        'images.*' => 'фото'
     ],
 
 ];

@@ -107,8 +107,9 @@ class RoutesController extends Controller
         $latitude = "";
         $name = "";
         $description = "";
+        $photos = [];
 
-        return view("trip/places", compact('id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
+        return view("trip/places", compact('id', 'order', 'length', 'longitude', 'latitude', 'name', 'description', 'photos'));
     }
 
     public function showPlace(int $id, int $order, int $length)
@@ -122,14 +123,16 @@ class RoutesController extends Controller
             $latitude = "";
             $name = "";
             $description = "";
+            $photos = [];
         } else {
             $longitude = $sight['longitude'];
             $latitude = $sight['latitude'];
             $name = $sight['name'];
             $description = $sight['description'];
+            $photos = json_decode($sight['photos']);
         }
 
-        return view("trip/places", compact('id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
+        return view("trip/places", compact('id', 'order', 'length', 'longitude', 'latitude', 'name', 'description', 'photos'));
     }
 
     public function addPlace(Request $request)
@@ -170,10 +173,16 @@ class RoutesController extends Controller
         $place['route_id'] = $trip_id;
 
         $image_paths = [];
+        if ($request->has('uploaded_images')) {
+            error_log("has");
+            foreach ($request->uploaded_images as $uploaded_image_url) {
+                array_push($image_paths, $uploaded_image_url);
+            }
+        }
         if ($request->hasfile('images')) {
             foreach ($request->file('images') as $file) {
-                $path = $file->storePublicly('storage/sights/' . $trip_id . '/images', 'public');
-                array_push($image_paths, $path);
+                $path = $file->storePublicly('sights/' . $trip_id . '/images', 'public');
+                array_push($image_paths, 'storage/' . $path);
             }
         }
         $place['photos'] = json_encode($image_paths);

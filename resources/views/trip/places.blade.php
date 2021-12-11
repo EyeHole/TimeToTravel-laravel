@@ -65,6 +65,19 @@
 
                     <div>
                         <label class="form-label file-input">Фото:</label>
+                        <div class="row">
+                            @foreach ($photos as $image_url)
+                                <div class="col-lg-4 col-md-4 col-xs-4 thumb">
+                                    <a class="thumbnail" href="#">
+                                        <img class="img-responsive my-2" src="{{ $image_url }}" alt="">
+                                        <button class="btn btn-danger" type="button"
+                                            onclick="return this.parentNode.remove();">Удалить</button>
+                                        <input type="hidden" value="{{ $image_url }}"
+                                            name="{{ 'uploaded_images[' . $loop->iteration . ']' }}">
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
                         @if (count($errors->get('images.*')) > 0)
                             <div class="alert alert-danger">
                                 <ul>

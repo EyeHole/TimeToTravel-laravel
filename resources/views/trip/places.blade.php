@@ -18,9 +18,8 @@
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSQ1ZoiS7_oGzQkUJwlkuBohkvW1_yWRs&callback=initMap&v=weekly"
                         async>
             </script>
-                <script src="{{ asset('js/map.js') }}"></script>
+            <script src="{{ asset('js/map.js') }}"></script>
 
-            </script>
             <div class="trip-form col">
                 <h4 class="header"> Выберите точку на карте или укажите ее координаты и расскажите о ней. </h4>
 
@@ -33,15 +32,17 @@
 
                     <div class="input-group {{ $errors->first('longitude') ? '' : 'mb-3' }}">
                         <label for="longitude" class="form-label">Долгота:&nbsp&nbsp</label>
-                        <input type="text" class="form-control {{($errors->first('longitude') ? 'form-error' : '')}}"  id = "longitude" name="longitude" placeholder="-73.985428" value='{{ $longitude }}'>
-                        </div>
-                        {!! $errors->first('longitude', '<p class="help-block">:message</p>') !!}
+                        <input type="text" class="form-control {{ $errors->first('longitude') ? 'form-error' : '' }}"
+                            id="longitude" name="longitude" placeholder="-73.985428" value='{{ $longitude }}'>
+                    </div>
+                    {!! $errors->first('longitude', '<p class="help-block">:message</p>') !!}
 
                     <div class="input-group {{ $errors->first('latitude') ? '' : 'mb-3' }}">
                         <label for="latitude" class="form-label">Широта:&nbsp&nbsp</label>
-                        <input type="text" class="form-control {{($errors->first('latitude') ? 'form-error' : '')}}"  id = "latitude" name="latitude" placeholder="40.748817" value='{{ $latitude }}'>
-                        </div>
-                        {!! $errors->first('latitude', '<p class="help-block">:message</p>') !!}
+                        <input type="text" class="form-control {{ $errors->first('latitude') ? 'form-error' : '' }}"
+                            id="latitude" name="latitude" placeholder="40.748817" value='{{ $latitude }}'>
+                    </div>
+                    {!! $errors->first('latitude', '<p class="help-block">:message</p>') !!}
 
                     <div class="input-group mb-3">
                         <label for="order" class="form-label">Очередность в маршруте:&nbsp&nbsp</label>

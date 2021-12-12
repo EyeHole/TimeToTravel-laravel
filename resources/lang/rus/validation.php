@@ -111,7 +111,7 @@ return [
         'password' => 'пароль',
         'email' => 'почта',
         'first_name' => 'имя',
-        'last_name' => 'фамилия'
+        'last_name' => 'фамилия',
         'mainImage' => 'главное изображение',
         'images.*' => 'фото',
         'audio' => 'аудио',

@@ -99,8 +99,8 @@
 
                         
                             <div class="add-trip text-center">
-                                <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center" type="submit" value="save">Сохранить</button>
-                                <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center" type="submit" value="delete"
+                                <button name="action" class="btn btn-success btn-padding btn-group justify-content-center" type="submit" value="save">Сохранить</button>
+                                <button name="action" class="btn btn-danger btn-padding btn-group justify-content-center" type="submit" value="delete"
                                 @if ($length < 2) disabled @endif>Удалить</button>
                             </div>
                             

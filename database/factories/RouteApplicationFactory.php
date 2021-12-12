@@ -31,7 +31,7 @@ class RouteApplicationFactory extends Factory
             'language' => $this->faker->numberBetween(0, 1),
             'user_id' => $user_id,
             'city_id' => $city_id,
-            'photo' => 'test.jpg'
+            'photo' => 'storage/test/routes/test.jpg',
         ];
     }
 }

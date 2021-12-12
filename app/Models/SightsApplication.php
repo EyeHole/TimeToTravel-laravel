@@ -15,6 +15,7 @@ class SightsApplication extends Model
         'longitude',
         'priority',
         'photos',
+        'audio',
         'status' // 0: undefined; 1: requested; 2: approved; 3: declined
     ];
 

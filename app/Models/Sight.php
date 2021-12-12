@@ -15,7 +15,8 @@ class Sight extends Model
         'latitude',
         'longitude',
         'priority',
-        'photos'
+        'photos',
+        'audio'
     ];
 
     protected $hidden = [

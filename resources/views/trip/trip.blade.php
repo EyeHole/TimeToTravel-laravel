@@ -16,22 +16,22 @@
 
                 <label for="name" class="form-label">Название маршрута:</label>
                 <div class="input-group {{ $errors->first('name') ? '' : 'mb-3' }}">
-                    <input type="text" class="form-control {{ $errors->first('name') ? 'form-error' : '' }}" name="name">
+                    <input type="text" class="form-control {{ $errors->first('name') ? 'form-error' : '' }}" name="name" value='{{name}}'>
                 </div>
                 {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
 
-                <label for="transport">Тип транспорта:</label>
-                <select class="form-control" name="transport">
-                    <option value=0 selected="selected">Не выбрано</option>
-                    <option value=1>Пешая прогулка</option>
-                    <option value=2>Автомобиль</option>
-                    <option value=3>Общественный транспорт</option>
-                </select>
+        <label for="transport">Тип транспорта:</label>
+        <select class="form-control" name="transport">
+        <option value=0 @if ($option == 0) selected="selected" @endif>Не выбрано</option>
+        <option value=1 @if ($option == 1) selected="selected" @endif>Пешая прогулка</option>
+        <option value=2 @if ($option == 2) selected="selected" @endif>Автомобиль</option>
+        <option value=3 @if ($option == 3) selected="selected" @endif>Общественный транспорт</option>
+        </select>
 
-                <label for="description" class="form-label">Описание:</label>
-                <div class="input-group">
-                    <textarea class="form-control" name="description"></textarea>
-                </div>
+        <label for="description" class="form-label">Описание:</label>
+        <div class="input-group">
+        <textarea class="form-control" name="description">{{ $description }}</textarea>
+        </div>
 
                 <label for="mainImage" class="form-label file-input">Фото: </label>
                 <div class="input-group">

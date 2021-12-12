@@ -67,14 +67,12 @@
                         <label class="form-label file-input">Фото:</label>
                         <div class="row">
                             @foreach ($photos as $image_url)
-                                <div class="col-lg-4 col-md-4 col-xs-4 thumb">
-                                    <a class="thumbnail" href="#">
-                                        <img class="img-responsive my-2" src="{{ $image_url }}" alt="">
-                                        <button class="btn btn-danger" type="button"
-                                            onclick="return this.parentNode.remove();">Удалить</button>
-                                        <input type="hidden" value="{{ $image_url }}"
-                                            name="{{ 'uploaded_images[' . $loop->iteration . ']' }}">
-                                    </a>
+                                <div class="col-lg-4 col-md-4 col-xs-4">
+                                    <img class="img-fluid  d-block mx-auto" src="{{ $image_url }}" alt="">
+                                    <button class="btn btn-danger d-block mx-auto mt-2" type="button"
+                                        onclick="return this.parentNode.remove();">Удалить</button>
+                                    <input type="hidden" value="{{ $image_url }}"
+                                        name="{{ 'uploaded_images[' . $loop->iteration . ']' }}">
                                 </div>
                             @endforeach
                         </div>

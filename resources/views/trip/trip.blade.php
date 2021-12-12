@@ -41,7 +41,7 @@
 
                 <label for="mainImage" class="form-label file-input">Фото: </label>
                 <div class="input-group">
-                    <input type="file" class="form-control" name="mainImage">
+                    <input type="file" class="form-control" name="mainImage" accept="image/*">
                     {{-- <button class="btn btn-primary" type="button">Добавить еще</button> --}}
                 </div>
                 {!! $errors->first('mainImage', '<p class="help-block">:message</p>') !!}

@@ -66,15 +66,17 @@
                     <div>
                         <label class="form-label file-input">Фото:</label>
                         <div class="row">
-                            @foreach ($photos as $image_url)
-                                <div class="col-lg-4 col-md-4 col-xs-4">
-                                    <img class="img-fluid  d-block mx-auto" src="{{ $image_url }}" alt="">
-                                    <button class="btn btn-danger d-block mx-auto mt-2" type="button"
-                                        onclick="return this.parentNode.remove();">Удалить</button>
-                                    <input type="hidden" value="{{ $image_url }}"
-                                        name="{{ 'uploaded_images[' . $loop->iteration . ']' }}">
-                                </div>
-                            @endforeach
+                            @if (isset($photos))
+                                @foreach ($photos as $image_url)
+                                    <div class="col-lg-4 col-md-4 col-xs-4">
+                                        <img class="img-fluid  d-block mx-auto" src="{{ $image_url }}" alt="">
+                                        <button class="btn btn-danger d-block mx-auto mt-2" type="button"
+                                            onclick="return this.parentNode.remove();">Удалить</button>
+                                        <input type="hidden" value="{{ $image_url }}"
+                                            name="{{ 'uploaded_images[' . $loop->iteration . ']' }}">
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
                         @if (count($errors->get('images.*')) > 0)
                             <div class="alert alert-danger">
@@ -96,9 +98,10 @@
 
                     <label for="audio" class="form-label file-input">Аудио:</label>
                     <div class="input-group">
-                        <input type="file" class="form-control" name="audio">
+                        <input type="file" class="form-control" name="audio" accept="audio/*">
                         {{-- <button class="btn btn-primary" type="button">Добавить еще</button> --}}
                     </div>
+                    {!! $errors->first('audio', '<p class="help-block">:message</p>') !!}
 
                     <div class="container-fluid btn-form">
 
@@ -141,7 +144,7 @@
             var newdiv = htmlToElement(
                 `                   
                 <div class="input-group my-2">
-                            <input type="file" class="form-control" name="images[]">
+                            <input type="file" class="form-control" name="images[]" accept="image/*">
                             <button class="btn btn-danger" type="button" onclick="return this.parentNode.remove();">Удалить</button>
                 </div>
                 `);

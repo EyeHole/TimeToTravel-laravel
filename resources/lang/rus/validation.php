@@ -109,7 +109,8 @@ return [
         'latitude' => 'широта',
         'longitude' => 'долгота',
         'mainImage' => 'главное изображение',
-        'images.*' => 'фото'
+        'images.*' => 'фото',
+        'audio' => 'аудио',
     ],
 
 ];

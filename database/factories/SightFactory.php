@@ -31,7 +31,8 @@ class SightFactory extends Factory
             'longitude' => $this->faker->longitude(37.5, 37.8),
             'priority' => $priority,
             'route_id' => $route_id,
-            'photos' => json_encode(['test.jpg'])
+            'photos' => json_encode(['storage/sights/' . $route_id . '/images/test.jpg', 'storage/sights/' . $route_id . '/images/test.jpg']),
+            'audio' => json_encode("storage/sights/" . $route_id . "/audio/test.mp3"),
         ];
     }
 }

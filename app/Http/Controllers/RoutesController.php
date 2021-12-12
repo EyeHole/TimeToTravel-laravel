@@ -154,6 +154,7 @@ class RoutesController extends Controller
             'latitude' => ['required', 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
             'longitude' => ['required', 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'],
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'audio' => 'nullable|file|mimes:audio/mpeg,mpga,mp3,wav,aac'
         ]);
 
         $place = Sight::where([
@@ -174,7 +175,6 @@ class RoutesController extends Controller
 
         $image_paths = [];
         if ($request->has('uploaded_images')) {
-            error_log("has");
             foreach ($request->uploaded_images as $uploaded_image_url) {
                 array_push($image_paths, $uploaded_image_url);
             }
@@ -186,6 +186,11 @@ class RoutesController extends Controller
             }
         }
         $place['photos'] = json_encode($image_paths);
+
+        if ($request->hasFile('audio')) {
+            $path = $request->file('audio')->storePublicly('sights/' . $trip_id . '/audio', 'public');
+            $place['audio'] = json_encode('storage/' . $path);
+        }
 
         error_log($place);
         $place->save();

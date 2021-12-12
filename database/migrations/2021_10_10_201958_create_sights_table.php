@@ -22,6 +22,7 @@ class CreateSightsTable extends Migration
             $table->integer('priority')->default(1);
             $table->integer('route_id')->unsigned();
             $table->json('photos')->nullable(true);
+            $table->json('audio')->nullable(true);
             $table->timestamps();
         });
 

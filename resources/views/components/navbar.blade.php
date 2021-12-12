@@ -2,7 +2,7 @@
 
   <nav class="navbar navbar-dark bg-primary sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{{ route('main') }}">Time To Travel Admin</a>
+      <a class="navbar-brand" href="{{ route('main') }}">TimeToTravel <b>Admin</b></a>
 
       @guest
       <div class="d-flex flex-row-reverse bd-highlight">

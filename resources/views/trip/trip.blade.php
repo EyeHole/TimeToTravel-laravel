@@ -1,16 +1,11 @@
-<!doctype html>
-<html>
-<header>
-    <title>TimeToTravel</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+@extends('main')
+
+@section('link')
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="{{ asset('js/map.js') }}"></script>
-</header>
-<x-navbar />
+@endsection
 
-<body>
+@section('content')
     <div class="container">
         <h1 class="text-center"> Создание маршрута </h1>
         <h4 class="sub-header text-center"> Общая информация </h4>
@@ -21,8 +16,7 @@
 
                 <label for="name" class="form-label">Название маршрута:</label>
                 <div class="input-group {{ $errors->first('name') ? '' : 'mb-3' }}">
-                    <input type="text" class="form-control {{ $errors->first('name') ? 'form-error' : '' }}"
-                        name="name">
+                    <input type="text" class="form-control {{ $errors->first('name') ? 'form-error' : '' }}" name="name">
                 </div>
                 {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
 
@@ -52,7 +46,4 @@
             </form>
         </div>
     </div>
-    <x-footer />
-</body>
-
-</html>
+@endsection

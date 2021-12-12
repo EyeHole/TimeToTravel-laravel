@@ -1,25 +1,18 @@
-<!doctype html>
-<html>
-<header>
-    <title>TimeToTravel</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+@extends('main')
+
+@section('link')
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSQ1ZoiS7_oGzQkUJwlkuBohkvW1_yWRs&callback=initMap&v=weekly"
+        async>
+    </script>
     <script src="{{ asset('js/map.js') }}"></script>
-</header>
+@endsection
 
-<x-navbar />
-
-<body>
+@section('content')
     <div class="container-fluid place-content">
         <div class="row">
             <div class="col" id="map"></div>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSQ1ZoiS7_oGzQkUJwlkuBohkvW1_yWRs&callback=initMap&v=weekly"
-                        async>
-            </script>
-            <script src="{{ asset('js/map.js') }}"></script>
-
             <div class="trip-form col">
                 <h4 class="header"> Выберите точку на карте или укажите ее координаты и расскажите о ней. </h4>
 
@@ -125,31 +118,26 @@
                 </form>
             </div>
         </div>
-    </div>
+        <script>
+            function htmlToElement(html) {
+                var template = document.createElement('template');
+                html = html.trim(); // Never return a text node of whitespace as the result
+                template.innerHTML = html;
+                return template.content.firstChild;
+            }
 
-    <x-footer />
+            function AddFileInput() {
+                var inputBlock = document.getElementById("imageInputBlock");
 
-    <script>
-        function htmlToElement(html) {
-            var template = document.createElement('template');
-            html = html.trim(); // Never return a text node of whitespace as the result
-            template.innerHTML = html;
-            return template.content.firstChild;
-        }
-
-        function AddFileInput() {
-            var inputBlock = document.getElementById("imageInputBlock");
-
-            var newdiv = htmlToElement(
-                `                   
+                var newdiv = htmlToElement(
+                    `                   
                 <div class="input-group my-2">
                             <input type="file" class="form-control" name="images[]" accept="image/*">
                             <button class="btn btn-danger" type="button" onclick="return this.parentNode.remove();">Удалить</button>
                 </div>
                 `);
-            inputBlock.appendChild(newdiv);
-        }
-    </script>
-</body>
-
-</html>
+                inputBlock.appendChild(newdiv);
+            }
+        </script>
+    </div>
+@endsection

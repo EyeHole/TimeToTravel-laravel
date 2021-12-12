@@ -24,7 +24,7 @@ use Illuminate\Validation\ValidationException;
     return $request->user();
 });*/
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
+// Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'route'], function () {
         Route::get('info/{id}', [RoutesController::class, 'info']);
         Route::get('points/{id}', [RoutesController::class, 'points']);
@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
     
     Route::post('upload/avatar', [UsersController::class, 'uploadAvatar']);
-});
+// });
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('signup', [AuthController::class, 'apiSignup']);

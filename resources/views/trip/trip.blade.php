@@ -16,7 +16,7 @@
 
                 <label for="name" class="form-label">Название маршрута:</label>
                 <div class="input-group {{ $errors->first('name') ? '' : 'mb-3' }}">
-                    <input type="text" class="form-control {{ $errors->first('name') ? 'form-error' : '' }}" name="name" value='{{name}}'>
+                    <input type="text" class="form-control {{ $errors->first('name') ? 'form-error' : '' }}" name="name" value="{{$name}}">
                 </div>
                 {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
 

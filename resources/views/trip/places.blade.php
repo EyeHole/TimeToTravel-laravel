@@ -19,7 +19,7 @@
                 <form method="post" action="{{ action('App\Http\Controllers\RoutesController@addPlace') }}"
                     enctype="multipart/form-data" accept-charset="UTF-8">
                     <input name="_token" type="hidden" value="{{ csrf_token() }}" />
-                    <input name="trip_id" type="hidden" value="{{ $id }}" />
+                    <input name="trip_id" type="hidden" value="{{ $route_id }}" />
                     <input name="order" type="hidden" value="{{ $order }}" />
                     <input name="length" type="hidden" value="{{ $length }}" />
 

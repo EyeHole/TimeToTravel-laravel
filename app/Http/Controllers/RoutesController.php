@@ -90,13 +90,11 @@ class RoutesController extends Controller
         }
 
         $route['city_id'] = 1; // id = 1 - Unknown
-        
         $route->save();
 
         $id = $route['id'];
-
-        session(['id' => $id]);
-        return redirect()->route('trip/places');
+        session(['route_id' => $id]);
+        return redirect()->route('place');
     }
 
     function getLocationNames($lat, $long) {
@@ -122,21 +120,10 @@ class RoutesController extends Controller
         return [$city, $country];
     }
 
-    public function showEmptyPlacesForm(Request $request) {
-        $id = session('id');
-        $order = 1;
-        $length = 1;
-        $longitude = "";
-        $latitude = "";
-        $name = "";
-        $description = "";
-        return view("trip/places", compact('id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
-    }
-
-    public function showPlace(int $id, int $order, int $length)
+    public function showPlace(int $route_id, int $order, int $length)
     {
         $sight = Sight::where([
-            ['route_id', '=', $id],
+            ['route_id', '=', $route_id],
             ['priority', '=', $order],
         ])->first();
         if ($sight == null) {
@@ -151,10 +138,18 @@ class RoutesController extends Controller
             $description = $sight['description'];
         }
 
-        return view("trip/places", compact('id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
+        return view("trip/places", compact('route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
     }
 
-    function addCityToRoute($lat, $long, $trip_id) {
+    function addCityToRoute($trip_id) {
+        $place = Sight::where([
+            ['route_id', '=', $trip_id],
+            ['priority', '=', 1]
+        ])->first();
+
+        $lat = $place['latitude'];
+        $long = $place['longitude'];
+
         list($city_name, $country_name) = $this->getLocationNames($lat, $long);
         $city = City::where('city', '=', $city_name)->first();
         if ($city == null) {
@@ -210,18 +205,45 @@ class RoutesController extends Controller
         return $distance;
     }
 
+    function deletePlace($trip_id, $order) {
+        $place = Sight::where([
+            ['route_id', '=', $trip_id],
+            ['priority', '=', $order]
+        ]);
+
+        if ($place != null) {
+            $place->delete();
+        
+            $places = Sight::where([
+                ['route_id', '=', $trip_id],
+                ['priority', '>', $order]
+            ])->get();
+
+            foreach ($places as $elem) {
+                error_log($elem['name']);
+                $elem['priority'] -= 1;
+                $elem->save();
+            }
+        }
+    }
+
     public function addPlace(Request $request)
     {
         $trip_id = $request->input('trip_id');
         $order = $request->input('order');
         $length = $request->input('length');
-    
-        if ($request->input('action') == 'prev') {
+
+        switch ($request->input('action')) {
+            case 'prev':
                 return $this->showPlace($trip_id, $order-1, $length);
-        } 
-        
-        if ($request->input('action') ==  'next') {
-            return $this->showPlace($trip_id, $order+1, $length);
+            case 'next':
+                return $this->showPlace($trip_id, $order+1, $length);
+            case 'delete':
+                $this->deletePlace($trip_id, $order);
+                if ($order == 1) {
+                    $order += 1;
+                }
+                return $this->showPlace($trip_id, $order-1, $length-1);
         }
 
         $request->validate([
@@ -234,7 +256,6 @@ class RoutesController extends Controller
             ['priority', '=', $order],
             ['route_id', '=', $trip_id]
         ])->first();
-    
         if ($place == null) {
             $place = new Sight();
         }
@@ -245,21 +266,19 @@ class RoutesController extends Controller
         $place['longitude'] = $request->input('longitude');
         $place['priority'] = $order;
         $place['route_id'] = $trip_id;
-
         $place->save();
 
-        if ($order == 1) {
-            $this->addCityToRoute($place['latitude'], $place['longitude'], $trip_id);
-        }
-        
-        if ($request->input('action') == 'new') {
-            return $this->showPlace($trip_id, $length+1, $length+1);
-        }
-    
-        if ($request->input('action') == 'end') {
-           $route = Route::find($trip_id);
-           $route['length'] = $this->getDistance($trip_id);
-           $route->save();
+        switch($request->input('action')) {
+            case 'save':
+                return $this->showPlace($trip_id, $order, $length);
+            case 'new':
+                return $this->showPlace($trip_id, $length+1, $length+1);
+            case 'end':
+                $this->addCityToRoute($trip_id);
+                $route = Route::find($trip_id);
+                $route['length'] = $this->getDistance($trip_id);
+                $route->save();
+                break;
         }
     
         return $this->showTripInfo($trip_id);
@@ -277,14 +296,30 @@ class RoutesController extends Controller
     }
 
     public function repopulatePlaces(Request $request) {
-        $id = $request->old('trip_id');
+        $route_id = $request->session()->get('route_id');
         $order = $request->old('order');
+        if (!$order) {
+            $order = 1;
+        }
+
         $length = $request->old('length');
+        if (!$length) {
+            $length = 1;
+        }
+    
         $longitude = $request->old('longitude');
         $latitude = $request->old('latitude');
         $name = $request->old('name');
         $description = $request->old('description');
 
-        return view("trip/places", compact('id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
+        return view("trip/places", compact('route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
+    }
+
+    public function repopulateRoute(Request $request) {
+        $name = $request->old('name');
+        $description = $request->old('description');
+        $option = $request->old('transport');
+
+        return view("trip/trip", compact('name', 'description', 'option'));
     }
 }

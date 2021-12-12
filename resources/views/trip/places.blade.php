@@ -25,7 +25,7 @@
 
                     <form method="post" action="{{ action('App\Http\Controllers\RoutesController@addPlace') }}" accept-charset="UTF-8">
                         <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
-                        <input name="trip_id" type="hidden" value="{{ $id }}"/>
+                        <input name="trip_id" type="hidden" value="{{ $route_id }}"/>
                         <input name="order" type="hidden" value="{{ $order }}"/>
                         <input name="length" type="hidden" value="{{ $length }}"/>
                     
@@ -70,6 +70,13 @@
                         </div>
 
                         <div class="container-fluid btn-form">
+
+                        
+                            <div class="add-trip text-center">
+                                <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center" type="submit" value="save">Сохранить</button>
+                                <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center" type="submit" value="delete"
+                                @if ($length < 2) disabled @endif>Удалить</button>
+                            </div>
                             
                             <div class="add-trip text-center">
                                 <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center" type="submit"  value="prev"
@@ -83,9 +90,6 @@
                                 <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center" type="submit" value="end">Закончить маршрут</button>
                             </div>
 
-                            <div class="text-center add-trip">
-                                
-                            </div>
                         </div>
                     </form>
                 </div>

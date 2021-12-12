@@ -12,7 +12,7 @@
     <body>
     <div class="container text-center welcome-content">
         <h2>Добро пожаловать на сайт Time To Travel!</h2>
-        <a href="{{ route('trip') }}" class="btn btn-primary main-btn" role="button">Добавить маршрут</a>
+        <a href="{{ route('route') }}" class="btn btn-primary main-btn" role="button">Добавить маршрут</a>
         </div>
     </div>
 

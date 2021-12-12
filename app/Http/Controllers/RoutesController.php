@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Route;
 use App\Models\Sight;
+use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class RoutesController extends Controller
 {
@@ -81,9 +83,13 @@ class RoutesController extends Controller
         $route['description'] = $request->input('description');
         $route['transport'] = $request->input('transport');
 
-        //get user id and default city here
-        $route['user_id'] = 1;
-        $route['city_id'] = 1;
+        if (Auth::check()) {
+            $route['user_id'] = Auth::id();
+        } else {
+            return redirect()->route('login');
+        }
+
+        $route['city_id'] = 1; // id = 1 - Unknown
         
         $route->save();
 
@@ -91,6 +97,29 @@ class RoutesController extends Controller
 
         session(['id' => $id]);
         return redirect()->route('trip/places');
+    }
+
+    function getLocationNames($lat, $long) {
+        $get_API = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
+        $get_API .= round($lat,4).",".round($long,4).'&language=ru&sensor=false&key='.env('GOOGLE_MAPS_API_KEY');        
+
+        $jsonfile = file_get_contents($get_API);
+        $jsonarray = json_decode($jsonfile);
+
+        $city = 'Unknown';
+        $country = 'Unknown';
+    
+        if (isset($jsonarray->results[1]->address_components)) {
+            foreach($jsonarray->results[1]->address_components as $elem) {
+                if ($elem->types[0] == 'locality') {
+                    $city = $elem->long_name;
+                }
+                if ($elem->types[0] == 'country') {
+                    $country = $elem->long_name;
+                }
+            }
+        }
+        return [$city, $country];
     }
 
     public function showEmptyPlacesForm(Request $request) {
@@ -123,6 +152,62 @@ class RoutesController extends Controller
         }
 
         return view("trip/places", compact('id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
+    }
+
+    function addCityToRoute($lat, $long, $trip_id) {
+        list($city_name, $country_name) = $this->getLocationNames($lat, $long);
+        $city = City::where('city', '=', $city_name)->first();
+        if ($city == null) {
+            $city = new City();
+            $city['city'] = $city_name;
+            $city['country'] = $country_name;
+            $city->save();
+        }
+    
+        $route = Route::find($trip_id);
+        $route['city_id'] = $city['id'];
+        $route->save();
+        return;
+    }
+
+    function getDistance($route_id) {
+        $sights = Sight::where([
+            ['route_id', '=', $route_id],
+        ])->orderBy('priority', 'ASC')->get();
+
+
+        $distanceUrl = 'https://maps.googleapis.com/maps/api/directions/json?'.
+        'origin='.$sights->first()['latitude'].','.$sights->first()['longitude'].
+        '&destination='.$sights->last()['latitude'].','.$sights->last()['longitude']
+        .'&waypoints=';
+
+        foreach($sights as $sight) {
+            $distanceUrl .= $sight['latitude'].','.$sight['longitude'].'|';
+        } 
+
+        $route = Route::find($route_id);
+        if ($route != null) {
+            switch ($route['transport']) {
+                case 1:
+                    $distanceUrl .='&mode=walking';
+                    break;
+                case 3:
+                    $distanceUrl .='&mode=transit';
+                    break;
+            }
+        }
+        
+        $distanceUrl .= '&key='.env('GOOGLE_MAPS_API_KEY');
+        $jsonfile = file_get_contents($distanceUrl);
+        $jsonarray = json_decode($jsonfile);
+
+        $distance = 0;
+        if (isset($jsonarray->routes[0]) && isset($jsonarray->routes[0]->legs)) {
+            foreach($jsonarray->routes[0]->legs as $elem) {
+                $distance += $elem->distance->value;
+            }
+        }
+        return $distance;
     }
 
     public function addPlace(Request $request)
@@ -162,10 +247,21 @@ class RoutesController extends Controller
         $place['route_id'] = $trip_id;
 
         $place->save();
+
+        if ($order == 1) {
+            $this->addCityToRoute($place['latitude'], $place['longitude'], $trip_id);
+        }
         
         if ($request->input('action') == 'new') {
             return $this->showPlace($trip_id, $length+1, $length+1);
         }
+    
+        if ($request->input('action') == 'end') {
+           $route = Route::find($trip_id);
+           $route['length'] = $this->getDistance($trip_id);
+           $route->save();
+        }
+    
         return $this->showTripInfo($trip_id);
     }
 

@@ -19,8 +19,6 @@
 
         <x-footer />
     </div>
-
-
 </body>
 
 

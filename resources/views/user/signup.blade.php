@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label for="name" class="form-label">Имя:</label>
                         <div class="input-group">
-                            <input class="form-control" type="text" name="first_name">
+                            <input class="form-control" type="text" name="first_name" value="{{ $first_name }}">
                         </div>
                         @if ($errors->has('first_name'))
                             <span class="text-danger">{{ $errors->first('first_name') }}</span>
@@ -21,7 +21,7 @@
                     <div class="form-group">
                         <label for="last_name" class="form-label">Фамилия:</label>
                         <div class="input-group">
-                            <input class="form-control" type="text" name="last_name">
+                            <input class="form-control" type="text" name="last_name" value="{{ $last_name }}">
                         </div>
                         @if ($errors->has('last_name'))
                             <span class="text-danger">{{ $errors->first('last_name') }}</span>
@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label for="email" class="form-label">Почта:</label>
                         <div class="input-group">
-                            <input class="form-control" type="email" name="email">
+                            <input class="form-control" type="email" name="email" value="{{ $email }}">
                         </div>
                         @if ($errors->has('email'))
                             <span class="text-danger">{{ $errors->first('email') }}</span>

@@ -112,4 +112,17 @@ class AuthController extends Controller
   
         return Redirect('/');
     }
+
+    public function repopulateLogin(Request $request) {
+        $email = $request->old('email');
+        return view("user/login", compact('email'));
+    }
+
+    public function repopulateSignup(Request $request) {
+        $email = $request->old('email');
+        $first_name = $request->old('first_name');
+        $last_name = $request->old('last_name');
+
+        return view("user/signup", compact('email', 'first_name', 'last_name'));
+    }
 }

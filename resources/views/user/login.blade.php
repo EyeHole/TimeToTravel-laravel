@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label for="email" class="form-label">Почта:</label>
                         <div class="input-group">
-                            <input class="form-control" type="email" name="email">
+                            <input class="form-control" type="email" name="email" value="{{ $email }}">
                         </div>
                         @if ($errors->has('email'))
                             <span class="text-danger">{{ $errors->first('email') }}</span>

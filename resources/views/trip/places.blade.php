@@ -89,6 +89,9 @@
 
 
                     <label for="audio" class="form-label file-input">Аудио:</label>
+                    @if (isset($audio) && $audio != "")
+                    <p class="help-block">Аудио уже было добавлено. Выбрать новый файл?</p>
+                    @endif
                     <div class="input-group">
                         <input type="file" class="form-control" name="audio" accept="audio/*">
                         {{-- <button class="btn btn-primary" type="button">Добавить еще</button> --}}

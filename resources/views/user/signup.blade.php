@@ -10,7 +10,7 @@
                     accept-charset="UTF-8">
                     @csrf
                     <div class="form-group">
-                        <label for="name" class="form-label">Имя:</label>
+                        <label for="name" class="form-label">Имя*:</label>
                         <div class="input-group">
                             <input class="form-control" type="text" name="first_name">
                         </div>
@@ -19,7 +19,7 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="last_name" class="form-label">Фамилия:</label>
+                        <label for="last_name" class="form-label">Фамилия*:</label>
                         <div class="input-group">
                             <input class="form-control" type="text" name="last_name">
                         </div>
@@ -28,7 +28,7 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="email" class="form-label">Почта:</label>
+                        <label for="email" class="form-label">Почта*:</label>
                         <div class="input-group">
                             <input class="form-control" type="email" name="email">
                         </div>
@@ -42,7 +42,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="password" class="form-label">Пароль:</label>
+                            <label for="password" class="form-label">Пароль (Укажите хотя бы одну букву и цифру):</label>
                             <div class="input-group">
                                 <input class="form-control" type="password" name="password">
                             </div>

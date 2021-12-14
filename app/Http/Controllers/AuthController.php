@@ -28,7 +28,7 @@ class AuthController extends Controller
             return redirect()->intended('/');
         }
   
-        return redirect("login")->withSuccess('Login details are not valid');
+        return redirect("login")->withErrors(['email' => trans('auth.failed')]);
     }
 
     public function webSignup(Request $request)
@@ -43,8 +43,7 @@ class AuthController extends Controller
         $data = request()->only('first_name', 'last_name', 'email', 'password', 'avatar');
         $user = $this->create($data);
 
-        $request->session()->regenerate();
-        return redirect("/")->withSuccess('You have signed-up');
+        return redirect("login");
     }
 
     public function create(array $data)

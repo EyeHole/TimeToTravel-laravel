@@ -20,6 +20,6 @@ class AuthorMiddleware
             return $next($request);
         }
 
-        return redirect()->back();
+        return redirect()->back()->withErrors(["unauthorized" => trans('auth.not_author')]);
     }
 }

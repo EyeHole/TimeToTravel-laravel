@@ -288,7 +288,7 @@ class RoutesController extends Controller
                 array_push($image_paths, $uploaded_image_url);
             }
         }
-        if ($request->hasfile('images')) {
+        if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
                 $path = $file->storePublicly('sights/' . $trip_id . '/images', 'public');
                 array_push($image_paths, 'storage/' . $path);

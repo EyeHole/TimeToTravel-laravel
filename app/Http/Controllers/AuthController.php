@@ -43,6 +43,12 @@ class AuthController extends Controller
         $data = request()->only('first_name', 'last_name', 'email', 'password', 'avatar');
         $user = $this->create($data);
 
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->storePublicly('avatars', 'public');
+            $user['avatar'] = $path;
+            $user->save();
+        }
+
         $request->session()->regenerate();
         return redirect("/")->withSuccess('You have signed-up');
     }

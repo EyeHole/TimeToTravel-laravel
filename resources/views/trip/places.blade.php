@@ -93,15 +93,6 @@
                         <input type="file" class="form-control" name="audio" accept="audio/*">
                         {{-- <button class="btn btn-primary" type="button">Добавить еще</button> --}}
                     </div>
-                    @if (count($errors) > 0)
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
                     {!! $errors->first('audio', '<p class="help-block">:message</p>') !!}
 
                     <div class="container-fluid btn-form">

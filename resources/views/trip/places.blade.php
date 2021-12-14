@@ -93,54 +93,66 @@
                         <input type="file" class="form-control" name="audio" accept="audio/*">
                         {{-- <button class="btn btn-primary" type="button">Добавить еще</button> --}}
                     </div>
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     {!! $errors->first('audio', '<p class="help-block">:message</p>') !!}
 
-                        <div class="container-fluid btn-form">
+                    <div class="container-fluid btn-form">
 
-                        
-                            <div class="add-trip text-center">
-                                <button name="action" class="btn btn-success btn-padding btn-group justify-content-center" type="submit" value="save">Сохранить</button>
-                                <button name="action" class="btn btn-danger btn-padding btn-group justify-content-center" type="submit" value="delete"
-                                @if ($length < 2) disabled @endif>Удалить</button>
-                            </div>
-                            
-                            <div class="add-trip text-center">
-                                <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center" type="submit"  value="prev"
-                                @if ($order < 2) disabled @endif>Предыдущее место</button>
-                                <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center" type="submit" value="next"
-                                @if ($length <= $order) disabled @endif>Следующее место</button>
-                            </div>
 
-                            <div class="add-trip text-center">
-                                <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center" type="submit" value="new">Добавить следующее место</button>
-                                <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center" type="submit" value="end">Закончить маршрут</button>
-                            </div>
-
+                        <div class="add-trip text-center">
+                            <button name="action" class="btn btn-success btn-padding btn-group justify-content-center"
+                                type="submit" value="save">Сохранить</button>
+                            <button name="action" class="btn btn-danger btn-padding btn-group justify-content-center"
+                                type="submit" value="delete" @if ($length < 2) disabled @endif>Удалить</button>
                         </div>
+
+                        <div class="add-trip text-center">
+                            <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center"
+                                type="submit" value="prev" @if ($order < 2) disabled @endif>Предыдущее место</button>
+                            <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center"
+                                type="submit" value="next" @if ($length <= $order) disabled @endif>Следующее место</button>
+                        </div>
+
+                        <div class="add-trip text-center">
+                            <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center"
+                                type="submit" value="new">Добавить следующее место</button>
+                            <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center"
+                                type="submit" value="end">Закончить маршрут</button>
+                        </div>
+
                     </div>
-                </form>
             </div>
+            </form>
         </div>
-        <script>
-            function htmlToElement(html) {
-                var template = document.createElement('template');
-                html = html.trim(); // Never return a text node of whitespace as the result
-                template.innerHTML = html;
-                return template.content.firstChild;
-            }
+    </div>
+    <script>
+        function htmlToElement(html) {
+            var template = document.createElement('template');
+            html = html.trim(); // Never return a text node of whitespace as the result
+            template.innerHTML = html;
+            return template.content.firstChild;
+        }
 
-            function AddFileInput() {
-                var inputBlock = document.getElementById("imageInputBlock");
+        function AddFileInput() {
+            var inputBlock = document.getElementById("imageInputBlock");
 
-                var newdiv = htmlToElement(
-                    `                   
+            var newdiv = htmlToElement(
+                `                   
                 <div class="input-group my-2">
                             <input type="file" class="form-control" name="images[]" accept="image/*">
                             <button class="btn btn-danger" type="button" onclick="return this.parentNode.remove();">Удалить</button>
                 </div>
                 `);
-                inputBlock.appendChild(newdiv);
-            }
-        </script>
+            inputBlock.appendChild(newdiv);
+        }
+    </script>
     </div>
 @endsection

@@ -141,15 +141,18 @@ class RoutesController extends Controller
             $name = "";
             $description = "";
             $photos = [];
+            $audio = "";
         } else {
             $longitude = $sight['longitude'];
             $latitude = $sight['latitude'];
             $name = $sight['name'];
             $description = $sight['description'];
             $photos = json_decode($sight['photos']);
+            $audio = json_decode($sight['audio']);
         }
+        $key = env('GOOGLE_MAPS_API_KEY');
 
-        return view("trip/places", compact('route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description', 'photos'));
+        return view("trip/places", compact('key', 'route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description', 'photos', 'audio'));
     }
 
     function addCityToRoute($trip_id) {
@@ -279,7 +282,6 @@ class RoutesController extends Controller
         $place['longitude'] = $request->input('longitude');
         $place['priority'] = $order;
         $place['route_id'] = $trip_id;
-        $place->save();
 
         $image_paths = [];
         if ($request->has('uploaded_images')) {
@@ -287,7 +289,7 @@ class RoutesController extends Controller
                 array_push($image_paths, $uploaded_image_url);
             }
         }
-        if ($request->hasfile('images')) {
+        if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
                 $path = $file->storePublicly('sights/' . $trip_id . '/images', 'public');
                 array_push($image_paths, 'storage/' . $path);
@@ -300,7 +302,7 @@ class RoutesController extends Controller
             $place['audio'] = json_encode('storage/' . $path);
         }
 
-        error_log($place);
+        $place->save();
         switch($request->input('action')) {
             case 'save':
                 return $this->showPlace($trip_id, $order, $length);
@@ -345,7 +347,9 @@ class RoutesController extends Controller
         $name = $request->old('name');
         $description = $request->old('description');
 
-        return view("trip/places", compact('route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
+        $key = env('GOOGLE_MAPS_API_KEY');
+
+        return view("trip/places", compact('key', 'route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
     }
 
     public function repopulateRoute(Request $request) {

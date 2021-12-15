@@ -21,17 +21,13 @@ Route::group(['middleware' => 'auth:web'], function () {
     });
 });
 
-Route::get('/login', function () {
-    return view('user/login');
-})->name('login');
+Route::get('login', [AuthController::class, 'repopulateLogin'])->name('login');
 Route::post('login', [AuthController::class, 'webLogin']);
 
-Route::get('/signup', function () {
-    return view('user/signup');
-})->name('signup');
+Route::get('signup', [AuthController::class, 'repopulateSignup'])->name('signup');
 Route::post('signup', [AuthController::class, 'webSignup']);
 
 Route::get('logout', [AuthController::class, 'webSignOut'])->name('logout');
 
-Route::get('/settings', [UsersController::class, 'settings'])->name('settings');
-Route::post('settings', [UsersController::class, 'update']);
+Route::get('settings', [AuthController::class, 'settings'])->name('settings');
+Route::post('settings', [AuthController::class, 'updateProfile']);

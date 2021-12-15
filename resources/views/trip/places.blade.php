@@ -3,7 +3,7 @@
 @section('link')
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSQ1ZoiS7_oGzQkUJwlkuBohkvW1_yWRs&callback=initMap&v=weekly"
+        src="https://maps.googleapis.com/maps/api/js?key={{ $key }}&callback=initMap&v=weekly"
         async>
     </script>
     <script src="{{ asset('js/map.js') }}"></script>
@@ -89,6 +89,9 @@
 
 
                     <label for="audio" class="form-label file-input">Аудио:</label>
+                    @if (isset($audio) && $audio != "")
+                    <p class="help-block">Аудио уже было добавлено. Выбрать новый файл?</p>
+                    @endif
                     <div class="input-group">
                         <input type="file" class="form-control" name="audio" accept="audio/*">
                         {{-- <button class="btn btn-primary" type="button">Добавить еще</button> --}}

@@ -7,12 +7,12 @@
                 <h4 class="card-title text-center mb-4 mt-1">Зарегистрироваться</h4>
                 <hr>
                 <form method="post" action="{{ action('App\Http\Controllers\AuthController@webSignup') }}"
-                    accept-charset="UTF-8">
+                enctype="multipart/form-data" accept-charset="UTF-8">
                     @csrf
                     <div class="form-group">
                         <label for="name" class="form-label">Имя*:</label>
                         <div class="input-group">
-                            <input class="form-control" type="text" name="first_name">
+                            <input class="form-control" type="text" name="first_name" value="{{ $first_name }}">
                         </div>
                         @if ($errors->has('first_name'))
                             <span class="text-danger">{{ $errors->first('first_name') }}</span>
@@ -21,7 +21,7 @@
                     <div class="form-group">
                         <label for="last_name" class="form-label">Фамилия*:</label>
                         <div class="input-group">
-                            <input class="form-control" type="text" name="last_name">
+                            <input class="form-control" type="text" name="last_name" value="{{ $last_name }}">
                         </div>
                         @if ($errors->has('last_name'))
                             <span class="text-danger">{{ $errors->first('last_name') }}</span>
@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label for="email" class="form-label">Почта*:</label>
                         <div class="input-group">
-                            <input class="form-control" type="email" name="email">
+                            <input class="form-control" type="email" name="email" value="{{ $email }}">
                         </div>
                         @if ($errors->has('email'))
                             <span class="text-danger">{{ $errors->first('email') }}</span>
@@ -56,9 +56,9 @@
                                 <input class="form-control" type="password" name="password_confirmation">
                             </div>
                         </div>
-                        <label for="photos" class="form-label file-input">Загрузите аватар: </label>
+                        <label for="avatar" class="form-label file-input">Загрузите аватар: </label>
                         <div class="input-group">
-                            <input type="file" class="form-control" name="avatar">
+                            <input type="file" class="form-control" name="avatar" accept="image/*">
                         </div>
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary card-btn mt-5 text-center"> Зарегистрироваться

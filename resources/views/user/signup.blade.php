@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <label for="bio" class="form-label mt-3">Расскажите о себе:</label>
                             <div class="input-group">
-                                <textarea name="" class="form-control" type="text" name="bio"></textarea>
+                                <textarea class="form-control" type="text" name="bio"></textarea>
                             </div>
                         </div>
                         <div class="form-group">

@@ -18,17 +18,17 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|string|email|max:255',
-            'password' => ['required', 'min:8','regex:/[a-zA-Z]/', 'regex:/[0-9]/']
+            'password' => ['required', 'min:8', 'regex:/[a-zA-Z]/', 'regex:/[0-9]/']
         ]);
-        
+
         $credentials = $request->only('email', 'password');
-   
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             return redirect()->intended('/');
         }
-  
+
         return redirect("login")->withErrors(['email' => trans('auth.failed')]);
     }
 
@@ -41,12 +41,12 @@ class AuthController extends Controller
             'password' => ['required', 'confirmed', 'min:8', 'regex:/[a-zA-Z]/', 'regex:/[0-9]/'],
         ]);
 
-        $data = request()->only('first_name', 'last_name', 'email', 'password', 'avatar');
+        $data = request()->only('first_name', 'last_name', 'email', 'password', 'avatar', 'bio');
         $user = $this->create($data);
 
         if ($request->hasFile('avatar')) {
             $path = $request->file('avatar')->storePublicly('avatars', 'public');
-            $user['avatar'] = 'storage/'.$path;
+            $user['avatar'] = 'storage/' . $path;
             $user->save();
         }
 
@@ -59,11 +59,12 @@ class AuthController extends Controller
         if (!Arr::exists($data, 'avatar')) {
             $data['avatar'] = '';
         }
-    
+
         if (!Arr::exists($data, 'bio')) {
+            error_log("was nil");
             $data['bio'] = '';
         }
-    
+
         return User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
@@ -73,7 +74,7 @@ class AuthController extends Controller
             'description' => $data['bio'],
             'avatar' => $data['avatar']
         ]);
-    } 
+    }
 
     public function apiLogin(Request $request)
     {
@@ -82,20 +83,20 @@ class AuthController extends Controller
             'password' => 'required',
             'device_name' => 'required',
         ]);
-    
+
         $user = User::where('email', $request->email)->first();
-    
-        if (! $user || ! Hash::check($request->password, $user->password)) {
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
-    
+
         return response()->json(['token' => $user->createToken($request->device_name)->plainTextToken]);
     }
 
     public function apiSignup(Request $request)
-    {  
+    {
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'string|max:255',
@@ -108,16 +109,18 @@ class AuthController extends Controller
         $user = $this->create($data);
 
         return response()->json(['token' => $user->createToken($request->device_name)->plainTextToken]);
-    } 
+    }
 
-    public function webSignOut() {
+    public function webSignOut()
+    {
         Session::flush();
         Auth::logout();
-  
+
         return Redirect('/');
     }
 
-    public function settings(Request $request) {
+    public function settings(Request $request)
+    {
         $user = Auth::user();
         $email = $user['email'];
         $name = $user['first_name'];
@@ -128,7 +131,8 @@ class AuthController extends Controller
         return view("user/settings", compact('email', 'name', 'surname', 'bio', 'avatar'));
     }
 
-    public function updateProfile(Request $request) {
+    public function updateProfile(Request $request)
+    {
         $request->validate([
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
@@ -140,11 +144,13 @@ class AuthController extends Controller
         $found_user = User::where([
             ['email', '=', $request->input('email')],
         ])->first();
-    
-        if ($found_user['id'] != $user['id']) {
-            return redirect("settings");
+
+        if ($found_user) {
+            if ($found_user['id'] != $user['id']) {
+                return redirect("settings");
+            }
         }
-    
+
         $user['first_name'] = $request->input('name');
         $user['last_name'] = $request->input('surname');
         $user['email'] = $request->input('email');
@@ -159,21 +165,23 @@ class AuthController extends Controller
 
         if ($request->hasFile('avatar')) {
             $path = $request->file('avatar')->storePublicly('avatars', 'public');
-            $user['avatar'] = 'storage/'.$path;
+            $user['avatar'] = 'storage/' . $path;
         }
 
         $user->save();
         error_log($user);
-    
+
         return redirect("settings");
     }
 
-    public function repopulateLogin(Request $request) {
+    public function repopulateLogin(Request $request)
+    {
         $email = $request->old('email');
         return view("user/login", compact('email'));
     }
 
-    public function repopulateSignup(Request $request) {
+    public function repopulateSignup(Request $request)
+    {
         $email = $request->old('email');
         $first_name = $request->old('first_name');
         $last_name = $request->old('last_name');

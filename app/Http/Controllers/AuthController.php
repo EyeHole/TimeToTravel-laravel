@@ -50,6 +50,7 @@ class AuthController extends Controller
             $user->save();
         }
 
+        $request->session()->regenerate();
         return redirect("login");
     }
 

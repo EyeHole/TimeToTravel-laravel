@@ -150,8 +150,9 @@ class RoutesController extends Controller
             $photos = json_decode($sight['photos']);
             $audio = json_decode($sight['audio']);
         }
+        $key = env('GOOGLE_MAPS_API_KEY');
 
-        return view("trip/places", compact('route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description', 'photos', 'audio'));
+        return view("trip/places", compact('key', 'route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description', 'photos', 'audio'));
     }
 
     function addCityToRoute($trip_id) {
@@ -346,7 +347,9 @@ class RoutesController extends Controller
         $name = $request->old('name');
         $description = $request->old('description');
 
-        return view("trip/places", compact('route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
+        $key = env('GOOGLE_MAPS_API_KEY');
+
+        return view("trip/places", compact('key', 'route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
     }
 
     public function repopulateRoute(Request $request) {

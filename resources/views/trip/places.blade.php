@@ -3,7 +3,7 @@
 @section('link')
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSQ1ZoiS7_oGzQkUJwlkuBohkvW1_yWRs&callback=initMap&v=weekly"
+        src="https://maps.googleapis.com/maps/api/js?key={{ $key }}&callback=initMap&v=weekly"
         async>
     </script>
     <script src="{{ asset('js/map.js') }}"></script>

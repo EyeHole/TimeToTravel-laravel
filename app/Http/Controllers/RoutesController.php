@@ -50,7 +50,7 @@ class RoutesController extends Controller
                 "language" => $item->language,
                 "photo" => $item->photo,
                 "author" => (object) array(
-                    "name" => $item->first_name . ' ' . $item->last_name,
+                    "name" => $item->name . ' ' . $item->surname,
                     "description" => $item->user_description
                 ),
             );

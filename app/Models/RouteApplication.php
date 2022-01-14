@@ -53,7 +53,7 @@ class RouteApplication extends Model
     {
         $user = User::find($this->user_id);
         $author = array(
-            'name' => $user->first_name.' '.$user->last_name,
+            'name' => $user->name.' '.$user->surname,
             'description' => $user->description,
             'avatar' => $user->avatar
         );

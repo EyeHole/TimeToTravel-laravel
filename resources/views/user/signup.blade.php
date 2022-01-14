@@ -12,19 +12,19 @@
                     <div class="form-group">
                         <label for="name" class="form-label">Имя*:</label>
                         <div class="input-group">
-                            <input class="form-control" type="text" name="first_name" value="{{ $first_name }}">
+                            <input class="form-control" type="text" name="name" value="{{ $name }}">
                         </div>
-                        @if ($errors->has('first_name'))
-                            <span class="text-danger">{{ $errors->first('first_name') }}</span>
+                        @if ($errors->has('name'))
+                            <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="last_name" class="form-label">Фамилия*:</label>
+                        <label for="surname" class="form-label">Фамилия*:</label>
                         <div class="input-group">
-                            <input class="form-control" type="text" name="last_name" value="{{ $last_name }}">
+                            <input class="form-control" type="text" name="surname" value="{{ $surname }}">
                         </div>
-                        @if ($errors->has('last_name'))
-                            <span class="text-danger">{{ $errors->first('last_name') }}</span>
+                        @if ($errors->has('surname'))
+                            <span class="text-danger">{{ $errors->first('surname') }}</span>
                         @endif
                     </div>
                     <div class="form-group">
@@ -36,9 +36,9 @@
                             <span class="text-danger">{{ $errors->first('email') }}</span>
                         @endif
                         <div class="form-group">
-                            <label for="bio" class="form-label mt-3">Расскажите о себе:</label>
+                            <label for="description" class="form-label mt-3">Расскажите о себе:</label>
                             <div class="input-group">
-                                <textarea class="form-control" type="text" name="bio"></textarea>
+                                <textarea class="form-control" type="text" name="description"></textarea>
                             </div>
                         </div>
                         <div class="form-group">

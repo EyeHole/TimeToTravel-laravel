@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\City;
 
 class CreateCitiesTable extends Migration
 {
@@ -18,6 +19,8 @@ class CreateCitiesTable extends Migration
             $table->string('city')->nullable(false);
             $table->string('country')->nullable(false);
         });
+
+        City::create('Unknown', 'Unknown');
     }
 
     /**

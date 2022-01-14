@@ -11,22 +11,21 @@ use Illuminate\Support\Facades\Auth;
 
 class RoutesController extends Controller
 {
-    public function info($id)
+    public function info(int $id)
     {
         $route = Route::find($id);
         return response()->json($route);
     }
 
-    public function points($id)
+    public function sights(int $id)
     {
-        $route = Route::find($id);
-        $sights = $route->sights()->get();
+        $sights = Sight::getAllByRoute($id);
         return response()->json(array('sights' => $sights));
     }
 
-    public function city(Request $request, $limit, $skip)
+    public function city(Request $request, int $limit, int $skip)
     {
-        $data = $request->json()->all();
+        $data = $request->only('city', 'latitude', 'longitude');
         $routes = Route::getRoutesByCity($data['city']);
 
         $sinLat = sin(deg2rad(floatval($data['latitude'])));
@@ -89,7 +88,7 @@ class RoutesController extends Controller
 
     function getLocationNames($lat, $long) {
         $get_API = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
-        $get_API .= round($lat,4).",".round($long,4).'&language=ru&sensor=false&key='.env('GOOGLE_MAPS_API_KEY');        
+        $get_API .= round($lat, 4).",".round($long, 4).'&language=ru&sensor=false&key='.env('GOOGLE_MAPS_API_KEY');        
 
         $jsonfile = file_get_contents($get_API);
         $jsonarray = json_decode($jsonfile);
@@ -134,7 +133,7 @@ class RoutesController extends Controller
         return view("route/sight", compact('key', 'route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description', 'photos', 'audio'));
     }
 
-    function addCityToRoute($route_id) {
+    function addCityToRoute(int $route_id) {
         $sight = Sight::getByRouteAndOrder($route_id, 1);
 
         $lat = $sight['latitude'];
@@ -151,7 +150,7 @@ class RoutesController extends Controller
         return;
     }
 
-    function getDistance($route_id) {
+    function getDistance(int $route_id) {
         $sights = Sight::getAllByRoute($route_id);
 
         $distanceUrl = 'https://maps.googleapis.com/maps/api/directions/json?'.
@@ -188,7 +187,7 @@ class RoutesController extends Controller
         return $distance;
     }
 
-    function deleteSight($route_id, $order) {
+    function deleteSight(int $route_id, int $order) {
         $sight = Sight::getByRouteAndOrder($route_id, $order);
 
         if ($sight != null) {

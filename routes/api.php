@@ -27,8 +27,8 @@ use Illuminate\Validation\ValidationException;
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'route'], function () {
         Route::get('info/{id}', [RoutesController::class, 'info']);
-        Route::get('points/{id}', [RoutesController::class, 'points']);
-        Route::post('city/{limit}/{skip}', [RoutesController::class, 'city']);
+        Route::get('sights/{id}', [RoutesController::class, 'sights']);
+        Route::get('city/{limit}/{skip}', [RoutesController::class, 'city']);
     });
     
     Route::post('upload/avatar', [UsersController::class, 'uploadAvatar']);

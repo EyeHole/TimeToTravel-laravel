@@ -47,6 +47,7 @@ class Sight extends Model
             $elem['priority'] -= 1;
             $elem->save();
         }
+        return;
     }
 
     public static function getAllByRoute($route_id) {
@@ -74,6 +75,7 @@ class Sight extends Model
         }
 
         $sight->save();
+        return;
     }
 
     public static function getSightsAmount($route_id) {

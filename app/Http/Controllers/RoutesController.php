@@ -84,7 +84,7 @@ class RoutesController extends Controller
 
         $id = Route::create($route_data);
         session(['route_id' => $id]);
-        return redirect()->route('place');
+        return redirect()->route('sight');
     }
 
     function getLocationNames($lat, $long) {
@@ -110,7 +110,7 @@ class RoutesController extends Controller
         return [$city, $country];
     }
 
-    public function showPlace(int $route_id, int $order, int $length)
+    public function showSight(int $route_id, int $order, int $length)
     {
         $sight = Sight::getByRouteAndOrder($route_id, $order);
     
@@ -131,14 +131,14 @@ class RoutesController extends Controller
         }
         $key = env('GOOGLE_MAPS_API_KEY');
 
-        return view("trip/places", compact('key', 'route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description', 'photos', 'audio'));
+        return view("route/sight", compact('key', 'route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description', 'photos', 'audio'));
     }
 
-    function addCityToRoute($trip_id) {
-        $place = Sight::getByRouteAndOrder($trip_id, 1);
+    function addCityToRoute($route_id) {
+        $sight = Sight::getByRouteAndOrder($route_id, 1);
 
-        $lat = $place['latitude'];
-        $long = $place['longitude'];
+        $lat = $sight['latitude'];
+        $long = $sight['longitude'];
 
         list($city_name, $country_name) = $this->getLocationNames($lat, $long);
         $city = City::getByName($city_name);
@@ -147,7 +147,7 @@ class RoutesController extends Controller
             $city['id'] = City::create($city_name, $country_name);
         }
     
-        Route::addCity($trip_id, $city['id']);
+        Route::addCity($route_id, $city['id']);
         return;
     }
 
@@ -188,33 +188,33 @@ class RoutesController extends Controller
         return $distance;
     }
 
-    function deletePlace($trip_id, $order) {
-        $place = Sight::getByRouteAndOrder($trip_id, $order);
+    function deleteSight($route_id, $order) {
+        $sight = Sight::getByRouteAndOrder($route_id, $order);
 
-        if ($place != null) {
-            $place->delete();
+        if ($sight != null) {
+            $sight->delete();
 
-            Sight::updateOrder($trip_id, $order);
+            Sight::updateOrder($route_id, $order);
         }
     }
 
-    public function addPlace(Request $request)
+    public function addSight(Request $request)
     {
-        $trip_id = $request->input('trip_id');
+        $route_id = $request->input('route_id');
         $order = $request->input('order');
         $length = $request->input('length');
 
         switch ($request->input('action')) {
             case 'prev':
-                return $this->showPlace($trip_id, $order-1, $length);
+                return $this->showSight($route_id, $order-1, $length);
             case 'next':
-                return $this->showPlace($trip_id, $order+1, $length);
+                return $this->showSight($route_id, $order+1, $length);
             case 'delete':
-                $this->deletePlace($trip_id, $order);
+                $this->deleteSight($route_id, $order);
                 if ($order == 1) {
                     $order += 1;
                 }
-                return $this->showPlace($trip_id, $order-1, $length-1);
+                return $this->showSight($route_id, $order-1, $length-1);
         }
 
         $request->validate([
@@ -225,9 +225,9 @@ class RoutesController extends Controller
             'audio' => 'nullable|file|mimes:audio/mpeg,mpga,mp3,wav,aac'
         ]);
 
-        $place_data = $request->only('name', 'description', 'latitude', 'longitude');
-        $place_data['priority'] = $order;
-        $place_data['route_id'] = $trip_id;
+        $sight_data = $request->only('name', 'description', 'latitude', 'longitude');
+        $sight_data['priority'] = $order;
+        $sight_data['route_id'] = $route_id;
 
         $image_paths = [];
         if ($request->has('uploaded_images')) {
@@ -237,45 +237,45 @@ class RoutesController extends Controller
         }
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
-                $path = $file->storePublicly('sights/' . $trip_id . '/images', 'public');
+                $path = $file->storePublicly('sights/' . $route_id . '/images', 'public');
                 array_push($image_paths, 'storage/' . $path);
             }
         }
-        $place_data['photos'] = json_encode($image_paths);
+        $sight_data['photos'] = json_encode($image_paths);
 
         if ($request->hasFile('audio')) {
-            $path = $request->file('audio')->storePublicly('sights/' . $trip_id . '/audio', 'public');
-            $place_data['audio'] = json_encode('storage/' . $path);
+            $path = $request->file('audio')->storePublicly('sights/' . $route_id . '/audio', 'public');
+            $sight_data['audio'] = json_encode('storage/' . $path);
         }
 
-        Sight::updateOrCreate($place_data);
+        Sight::updateOrCreate($sight_data);
     
         switch($request->input('action')) {
             case 'save':
-                return $this->showPlace($trip_id, $order, $length);
+                return $this->showSight($route_id, $order, $length);
             case 'new':
-                return $this->showPlace($trip_id, $length+1, $length+1);
+                return $this->showSight($route_id, $length+1, $length+1);
             case 'end':
-                $this->addCityToRoute($trip_id);
-                Route::addLength($trip_id, $this->getDistance($trip_id));
+                $this->addCityToRoute($route_id);
+                Route::addLength($route_id, $this->getDistance($route_id));
                 break;
         }
     
-        return $this->showTripInfo($trip_id);
+        return $this->showrouteInfo($route_id);
     }
 
-    public function showTripInfo(int $trip_id)
+    public function showrouteInfo(int $route_id)
     {
-        $route = Route::find($trip_id);
+        $route = Route::find($route_id);
         $name = $route['name'];
         $description = $route['description'];
         $option = $route['transport'];
-        $length = Sight::getSightsAmount($trip_id);
+        $length = Sight::getSightsAmount($route_id);
 
-        return view("trip/overview", compact('length', 'name', 'description', 'option'));
+        return view("route/overview", compact('length', 'name', 'description', 'option'));
     }
 
-    public function repopulatePlaces(Request $request) {
+    public function repopulateSights(Request $request) {
         $route_id = $request->session()->get('route_id');
         $order = $request->old('order');
         if (!$order) {
@@ -294,7 +294,7 @@ class RoutesController extends Controller
 
         $key = env('GOOGLE_MAPS_API_KEY');
 
-        return view("trip/places", compact('key', 'route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
+        return view("route/sight", compact('key', 'route_id', 'order', 'length', 'longitude', 'latitude', 'name', 'description'));
     }
 
     public function repopulateRoute(Request $request) {
@@ -302,6 +302,6 @@ class RoutesController extends Controller
         $description = $request->old('description');
         $option = $request->old('transport');
 
-        return view("trip/trip", compact('name', 'description', 'option'));
+        return view("route/route", compact('name', 'description', 'option'));
     }
 }

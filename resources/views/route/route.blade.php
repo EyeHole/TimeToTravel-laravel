@@ -40,7 +40,7 @@
                 </div>
                 {!! $errors->first('mainImage', '<p class="help-block">:message</p>') !!}
 
-                <div class="text-center add-trip justify-content-center">
+                <div class="text-center add-route justify-content-center">
                     <button class="btn btn-primary main-btn" type="submit">Добавить места</button>
                 </div>
             </form>

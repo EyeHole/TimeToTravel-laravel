@@ -16,11 +16,11 @@ body,
     padding: 0;
 }
 
-.trip-form {
+.route-form {
     padding: 3%;
 }
 
-.add-trip {
+.add-route {
     padding: 1.5%;
 }
 
@@ -32,7 +32,7 @@ body,
     margin-top: 0.5rem;
 }
 
-.trip-label {
+.route-label {
     font-weight: bold;
     font-size: medium;
 }
@@ -45,7 +45,7 @@ body,
     padding: 1.5%;
 }
 
-.place-content {
+.sight-content {
     margin-bottom: 3%;
 }
 

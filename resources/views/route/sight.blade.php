@@ -10,16 +10,16 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid place-content">
+    <div class="container-fluid sight-content">
         <div class="row">
             <div class="col" id="map"></div>
-            <div class="trip-form col">
+            <div class="route-form col">
                 <h4 class="header"> Выберите точку на карте или укажите ее координаты и расскажите о ней. </h4>
 
-                <form method="post" action="{{ action('App\Http\Controllers\RoutesController@addPlace') }}"
+                <form method="post" action="{{ action('App\Http\Controllers\RoutesController@addSight') }}"
                     enctype="multipart/form-data" accept-charset="UTF-8">
                     <input name="_token" type="hidden" value="{{ csrf_token() }}" />
-                    <input name="trip_id" type="hidden" value="{{ $route_id }}" />
+                    <input name="route_id" type="hidden" value="{{ $route_id }}" />
                     <input name="order" type="hidden" value="{{ $order }}" />
                     <input name="length" type="hidden" value="{{ $length }}" />
 
@@ -101,21 +101,21 @@
                     <div class="container-fluid btn-form">
 
 
-                        <div class="add-trip text-center">
+                        <div class="add-route text-center">
                             <button name="action" class="btn btn-success btn-padding btn-group justify-content-center"
                                 type="submit" value="save">Сохранить</button>
                             <button name="action" class="btn btn-danger btn-padding btn-group justify-content-center"
                                 type="submit" value="delete" @if ($length < 2) disabled @endif>Удалить</button>
                         </div>
 
-                        <div class="add-trip text-center">
+                        <div class="add-route text-center">
                             <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center"
                                 type="submit" value="prev" @if ($order < 2) disabled @endif>Предыдущее место</button>
                             <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center"
                                 type="submit" value="next" @if ($length <= $order) disabled @endif>Следующее место</button>
                         </div>
 
-                        <div class="add-trip text-center">
+                        <div class="add-route text-center">
                             <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center"
                                 type="submit" value="new">Добавить следующее место</button>
                             <button name="action" class="btn btn-primary btn-padding btn-group justify-content-center"

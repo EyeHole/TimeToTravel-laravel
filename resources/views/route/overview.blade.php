@@ -12,12 +12,12 @@
         <div class="content">
 
             <div class="card card-body text-center">
-                <label for="name" class="trip-label">Название маршрута:</label>
+                <label for="name" class="route-label">Название маршрута:</label>
                 <div class="mb-3">
                     <p>{{ $name }}</p>
                 </div>
 
-                <label for="transport" class="trip-label">Тип транспорта:</label>
+                <label for="transport" class="route-label">Тип транспорта:</label>
                 <div class="mb-3">
                     @switch ($option)
                         @case(0)
@@ -35,12 +35,12 @@
                     @endswitch
                 </div>
 
-                <label for="description" class="trip-label">Описание:</label>
+                <label for="description" class="route-label">Описание:</label>
                 <div class="mb-3">
                     <p>{{ $description }}</p>
                 </div>
 
-                <label for="length" class="trip-label">Количество мест:</label>
+                <label for="length" class="route-label">Количество мест:</label>
                 <div>
                     <p>{{ $length }}</p>
                 </div>

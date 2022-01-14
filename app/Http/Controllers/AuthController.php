@@ -61,7 +61,6 @@ class AuthController extends Controller
         }
 
         if (!Arr::exists($data, 'bio')) {
-            error_log("was nil");
             $data['bio'] = '';
         }
 
@@ -169,7 +168,6 @@ class AuthController extends Controller
         }
 
         $user->save();
-        error_log($user);
 
         return redirect("settings");
     }

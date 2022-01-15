@@ -8,6 +8,8 @@ use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class RoutesController extends Controller
 {
@@ -90,6 +92,10 @@ class RoutesController extends Controller
 
         if ($request->hasFile('mainImage')) {
             $path = $request->file('mainImage')->storePublicly('routes', 'public');
+            //resize
+            $image = Image::make(storage_path() . '/app/public/'. $path)
+                ->fit(1920, 1080)
+                ->save(storage_path() . '/app/public/'. $path);
             $route['photo'] = 'storage/' . $path;
         }
         if (Auth::check()) {
@@ -97,7 +103,6 @@ class RoutesController extends Controller
         } else {
             return redirect()->route('login');
         }
-
         $route['city_id'] = 1; // id = 1 - Unknown
         $route->save();
 
@@ -292,6 +297,10 @@ class RoutesController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
                 $path = $file->storePublicly('sights/' . $trip_id . '/images', 'public');
+                //resize
+                $image = Image::make(storage_path() . '/app/public/'. $path)
+                ->fit(1920, 1080)
+                ->save(storage_path() . '/app/public/'. $path);
                 array_push($image_paths, 'storage/' . $path);
             }
         }

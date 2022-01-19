@@ -37,10 +37,10 @@
                         @endif
 
                         <div class="form-group">
-                            <label for="bio" class="form-label mt-3">О Вас:</label>
+                            <label for="description" class="form-label mt-3">О Вас:</label>
                             <div class="input-group">
                                 <textarea class="form-control" type="text"
-                                    name="bio">{{ $bio }}</textarea>
+                                    name="description">{{ $description }}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -55,7 +55,7 @@
                         <div class="form-group">
                             <label for="password" class="form-label">Повторите новый пароль:</label>
                             <div class="input-group">
-                                <input class="form-control" type="password" name="repeated_password">
+                                <input class="form-control" type="password" name="password_confirmation">
                             </div>
                         </div>
                     

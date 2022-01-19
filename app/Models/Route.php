@@ -52,10 +52,57 @@ class Route extends Model
     {
         $user = User::find($this->user_id);
         $author = array(
-            'name' => $user->first_name.' '.$user->last_name,
+            'name' => $user->name.' '.$user->surname,
             'description' => $user->description,
             'avatar' => $user->avatar
         );
         return $author;
+    }
+
+    public static function create($route_data) {
+        $route = new Route();
+    
+        $route['name'] = $route_data['name'];
+        $route['description'] = $route_data['description'];
+        $route['transport'] = $route_data['transport'];
+        $route['user_id'] = $route_data['user_id'];
+        $route['city_id'] = $route_data['city_id'];
+    
+        if (isset($route_data['photo'])) {
+            $route['photo'] = $route_data['photo'];
+        }
+
+        $route->save();
+        return $route['id'];
+    }
+
+    public static function getRoutesByCity($city) {
+        return DB::table('cities')
+            ->where('city', '=', $data['city'])
+            ->join('routes', 'cities.id', '=', 'routes.city_id')
+            ->join('users', 'routes.user_id', '=', 'users.id')
+            ->join('sights', 'sights.route_id', '=', 'routes.id')
+            ->where('sights.priority', '=', '1')
+            ->select(
+                'routes.*',
+                'sights.latitude',
+                'sights.longitude',
+                'users.name',
+                'users.surname',
+                'users.description as user_description'
+            )
+            ->get()->toArray();
+    }
+
+    public static function addCity($id, $city) {
+        $route = Route::find($id);
+        $route['city_id'] = $city;
+        $route->save();
+    }
+
+    public static function addLength($id, $length) {
+        $route = Route::find($id);
+        $route['length'] = $length;
+        $route->save();
     }
 }
